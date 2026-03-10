@@ -1,41 +1,95 @@
 "use client";
 
 import FadeIn from "@/components/FadeIn";
-import { Sun, Battery, Flame } from "lucide-react";
+import TabPanel from "@/components/TabPanel";
+import Link from "next/link";
+import { Sun, Battery, Flame, ArrowRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const techCards = [
-  {
-    icon: Sun,
-    title: "Solar Generation",
-    capacity: "150–200 MW | $200–270M",
-    description:
-      "Utility-scale solar arrays generating low-cost electricity during daylight hours. Australia\u2019s solar irradiance is among the best in the world \u2014 regional Queensland sites generate 20\u201330% more energy per panel than European equivalents.",
-    borderColor: "border-amber",
-    iconColor: "text-amber",
-  },
-  {
-    icon: Battery,
-    title: "Battery Storage",
-    capacity: "200–400 MWh | $150–200M",
-    description:
-      "Large-scale lithium-ion battery systems that store excess solar energy during the day and discharge it through the night. Battery costs have fallen 11\u201316% year-on-year, making 4\u20136 hour duration storage economically viable.",
-    borderColor: "border-olive",
-    iconColor: "text-olive",
-  },
-  {
-    icon: Flame,
-    title: "Gas Backup",
-    capacity: "50–80 MW | $60–80M",
-    description:
-      "Fast-start reciprocating gas engines providing firm backup power during extended cloud cover or peak demand periods. Ensures 99.99% uptime guarantees required by hyperscale customers. Runs <5% of hours annually.",
-    borderColor: "border-grey",
-    iconColor: "text-grey",
-  },
-];
+function TechTab({
+  icon: Icon,
+  title,
+  capacity,
+  description,
+  color,
+}: {
+  icon: LucideIcon;
+  title: string;
+  capacity: string;
+  description: string;
+  color: string;
+}) {
+  return (
+    <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+      <div className="flex-1">
+        <div className="flex items-center gap-3 mb-3">
+          <div className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center`}>
+            <Icon className="w-5 h-5 text-white" strokeWidth={1.5} />
+          </div>
+          <div>
+            <h3 className="font-serif text-xl text-text-primary">{title}</h3>
+            <p className="text-sm text-text-muted">{capacity}</p>
+          </div>
+        </div>
+        <p className="text-text-secondary leading-[1.7] text-[15px] max-w-lg">
+          {description}
+        </p>
+      </div>
+
+      {/* Compact energy flow */}
+      <div className="w-full md:w-[280px] shrink-0">
+        <svg
+          viewBox="0 0 280 80"
+          className="w-full"
+          role="img"
+          aria-label="Energy flow diagram"
+        >
+          <line x1="30" y1="40" x2="100" y2="40" stroke="#E8E5E1" strokeWidth="2" />
+          <line x1="140" y1="40" x2="210" y2="40" stroke="#E8E5E1" strokeWidth="2" />
+
+          {/* Animated particles */}
+          {[0, 1].map((seg) => (
+            <circle key={seg} r="3" fill="#8BA04A" opacity="0.8">
+              <animateMotion
+                dur="2.5s"
+                repeatCount="indefinite"
+                begin={`${seg * 0.6}s`}
+                path={`M${30 + seg * 110},40 L${100 + seg * 110},40`}
+              />
+              <animate
+                attributeName="opacity"
+                values="0;0.8;0.8;0"
+                dur="2.5s"
+                repeatCount="indefinite"
+                begin={`${seg * 0.6}s`}
+              />
+            </circle>
+          ))}
+
+          {/* Source */}
+          <circle cx="15" cy="40" r="12" fill="#F0F4E4" stroke="#5C6F2D" strokeWidth="1.5" />
+          <text x="15" y="44" textAnchor="middle" fontSize="11" fill="#5C6F2D" fontFamily="Inter, system-ui, sans-serif">&#9728;</text>
+
+          {/* Storage */}
+          <rect x="100" y="26" width="40" height="28" rx="4" fill="#F0F4E4" stroke="#5C6F2D" strokeWidth="1.5" />
+          <text x="120" y="44" textAnchor="middle" fill="#5C6F2D" fontSize="9" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">Store</text>
+
+          {/* DC */}
+          <rect x="210" y="26" width="55" height="28" rx="4" fill="#5C6F2D" />
+          <text x="237" y="44" textAnchor="middle" fill="#FFFFFF" fontSize="9" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">Data Centre</text>
+
+          {/* Arrows */}
+          <polygon points="97,36 97,44 103,40" fill="#5C6F2D" opacity="0.5" />
+          <polygon points="207,36 207,44 213,40" fill="#5C6F2D" opacity="0.5" />
+        </svg>
+      </div>
+    </div>
+  );
+}
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-[120px] lg:py-[160px] bg-white">
+    <section className="py-[80px] lg:py-[100px] bg-white">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
         <FadeIn>
           <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
@@ -46,91 +100,64 @@ export default function HowItWorksSection() {
           </p>
         </FadeIn>
 
-        {/* Cards */}
-        <div className="mt-14 grid md:grid-cols-3 gap-6">
-          {techCards.map((card, i) => (
-            <FadeIn key={i} delay={i * 0.1}>
-              <div
-                className={`p-8 bg-cream rounded-lg border-l-4 ${card.borderColor} card-hover h-full`}
-              >
-                <card.icon className={`w-8 h-8 ${card.iconColor} mb-4`} strokeWidth={1.5} />
-                <h3 className="font-serif text-2xl text-text-primary mb-1">
-                  {card.title}
-                </h3>
-                <p className="text-sm text-olive font-medium mb-4">
-                  {card.capacity}
-                </p>
-                <p className="text-text-secondary leading-[1.7] text-[15px]">
-                  {card.description}
-                </p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-
-        {/* Energy Flow Diagram — inline styled SVG text */}
-        <FadeIn delay={0.2}>
-          <div className="mt-16 flex justify-center">
-            <svg
-              viewBox="0 0 900 120"
-              className="w-full max-w-[800px]"
-              role="img"
-              aria-label="Energy flow: Sun to Solar Panels to Battery Storage to Data Centre, with Gas as backup"
-            >
-              {/* Flow lines */}
-              <line x1="80" y1="60" x2="260" y2="60" stroke="#E8E5E1" strokeWidth="2" />
-              <line x1="330" y1="60" x2="510" y2="60" stroke="#E8E5E1" strokeWidth="2" />
-              <line x1="580" y1="60" x2="760" y2="60" stroke="#E8E5E1" strokeWidth="2" />
-
-              {/* Gas backup branch */}
-              <line x1="650" y1="60" x2="650" y2="22" stroke="#E8E5E1" strokeWidth="1.5" strokeDasharray="4,4" />
-              <text x="650" y="14" textAnchor="middle" fill="#857F78" fontSize="10" fontFamily="Inter, system-ui, sans-serif">Gas Backup</text>
-
-              {/* Animated particles */}
-              {[0, 1, 2].map((seg) => (
-                <circle key={seg} r="4" fill="#8BA04A" opacity="0.8">
-                  <animateMotion
-                    dur="3s"
-                    repeatCount="indefinite"
-                    begin={`${seg * 0.8}s`}
-                    path={`M${80 + seg * 250},60 L${260 + seg * 250},60`}
+        <FadeIn delay={0.15}>
+          <TabPanel
+            className="mt-10"
+            tabs={[
+              {
+                id: "solar",
+                label: "Solar Generation",
+                icon: Sun,
+                content: (
+                  <TechTab
+                    icon={Sun}
+                    title="Solar Generation"
+                    capacity="150–200 MW per site"
+                    description="Utility-scale solar generating low-cost electricity. Australia's irradiance yields 20–30% more energy per panel than Europe — making regional Queensland one of the best solar locations on earth."
+                    color="bg-amber"
                   />
-                  <animate
-                    attributeName="opacity"
-                    values="0;0.9;0.9;0"
-                    dur="3s"
-                    repeatCount="indefinite"
-                    begin={`${seg * 0.8}s`}
+                ),
+              },
+              {
+                id: "battery",
+                label: "Battery Storage",
+                icon: Battery,
+                content: (
+                  <TechTab
+                    icon={Battery}
+                    title="Battery Storage"
+                    capacity="200–400 MWh per site"
+                    description="Large-scale lithium-ion storing solar energy for overnight use. Battery costs are falling 11–16% per year, making 4–6 hour duration storage increasingly economical."
+                    color="bg-olive"
                   />
-                </circle>
-              ))}
+                ),
+              },
+              {
+                id: "gas",
+                label: "Gas Backup",
+                icon: Flame,
+                content: (
+                  <TechTab
+                    icon={Flame}
+                    title="Gas Backup"
+                    capacity="50–80 MW per site"
+                    description="Fast-start reciprocating engines for 99.99% uptime during extended cloud cover. Runs less than 5% of hours annually — a reliability layer, not a primary energy source."
+                    color="bg-grey"
+                  />
+                ),
+              },
+            ]}
+          />
+        </FadeIn>
 
-              {/* Sun */}
-              <circle cx="40" cy="60" r="22" fill="#F0F4E4" stroke="#D97706" strokeWidth="1.5" />
-              <text x="40" y="66" textAnchor="middle" fontSize="20" fill="#D97706">&#9728;</text>
-              <text x="40" y="100" textAnchor="middle" fill="#6B6560" fontSize="11" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">Sun</text>
-
-              {/* Solar */}
-              <rect x="260" y="38" width="70" height="44" rx="6" fill="#F0F4E4" stroke="#5C6F2D" strokeWidth="1.5" />
-              <text x="295" y="64" textAnchor="middle" fill="#5C6F2D" fontSize="11" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">Solar</text>
-              <text x="295" y="100" textAnchor="middle" fill="#6B6560" fontSize="11" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">150–200 MW</text>
-
-              {/* Battery */}
-              <rect x="510" y="38" width="70" height="44" rx="6" fill="#F0F4E4" stroke="#5C6F2D" strokeWidth="1.5" />
-              <text x="545" y="64" textAnchor="middle" fill="#5C6F2D" fontSize="11" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">Battery</text>
-              <text x="545" y="100" textAnchor="middle" fill="#6B6560" fontSize="11" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">200–400 MWh</text>
-
-              {/* Data Centre */}
-              <rect x="760" y="38" width="100" height="44" rx="6" fill="#5C6F2D" />
-              <text x="810" y="64" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">Data Centre</text>
-              <text x="810" y="100" textAnchor="middle" fill="#6B6560" fontSize="11" fontWeight="500" fontFamily="Inter, system-ui, sans-serif">100 MW load</text>
-
-              {/* Arrows */}
-              <polygon points="255,55 255,65 265,60" fill="#5C6F2D" opacity="0.5" />
-              <polygon points="505,55 505,65 515,60" fill="#5C6F2D" opacity="0.5" />
-              <polygon points="755,55 755,65 765,60" fill="#5C6F2D" opacity="0.5" />
-            </svg>
-          </div>
+        <FadeIn delay={0.3}>
+          <Link
+            href="/how-it-works"
+            className="inline-flex items-center gap-1.5 mt-8 text-olive font-medium text-sm hover:underline"
+          >
+            See full technical specs
+            <ArrowRight size={14} />
+          </Link>
         </FadeIn>
       </div>
     </section>

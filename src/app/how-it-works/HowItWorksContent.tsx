@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
 import SourcesPanel from "@/components/SourcesPanel";
 import Link from "next/link";
-import { Sun, Battery, Flame, CheckCircle, XCircle, Droplets, Leaf } from "lucide-react";
+import { Sun, Battery, Flame, CheckCircle, Droplets, Leaf, Grid3X3, Zap } from "lucide-react";
+import ComparisonToggle from "@/components/ComparisonToggle";
 
 const techSpecs = [
   {
@@ -455,92 +456,37 @@ export default function HowItWorksContent() {
             </p>
           </FadeIn>
 
-          <div className="mt-14 grid md:grid-cols-2 gap-8">
-            {/* Traditional path */}
-            <FadeIn delay={0.1}>
-              <div className="p-8 bg-red-tint rounded-lg border border-red/20">
-                <div className="flex items-center gap-2 mb-6">
-                  <XCircle className="w-6 h-6 text-red" />
-                  <h3 className="font-serif text-xl text-red">
-                    Traditional Grid Connection
-                  </h3>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    "Power Station",
-                    "Transmission Network",
-                    "Substation Upgrade",
-                    "Distribution Network",
-                    "Data Centre",
-                  ].map((step, j) => (
-                    <div key={j}>
-                      <div className="flex items-center gap-3">
-                        <span className="w-8 h-8 rounded-full bg-red/10 flex items-center justify-center text-red text-sm font-medium">
-                          {j + 1}
-                        </span>
-                        <span className="text-text-secondary text-[15px]">
-                          {step}
-                        </span>
-                      </div>
-                      {j < 4 && (
-                        <div className="ml-4 h-4 border-l-2 border-dashed border-red/30" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 p-4 bg-white rounded border border-red/20">
-                  <p className="text-red font-medium text-sm">
-                    3–5 year wait time
-                  </p>
-                  <p className="text-text-muted text-sm mt-1">
-                    Subject to grid capacity, substation upgrades, regulatory
-                    approvals
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Brightwood path */}
-            <FadeIn delay={0.2}>
-              <div className="p-8 bg-olive-tint rounded-lg border border-olive/20">
-                <div className="flex items-center gap-2 mb-6">
-                  <CheckCircle className="w-6 h-6 text-olive" />
-                  <h3 className="font-serif text-xl text-olive">
-                    Brightwood Behind-the-Meter
-                  </h3>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    "Solar + Battery + Gas",
-                    "Direct Connection",
-                    "Data Centre",
-                  ].map((step, j) => (
-                    <div key={j}>
-                      <div className="flex items-center gap-3">
-                        <span className="w-8 h-8 rounded-full bg-olive/10 flex items-center justify-center text-olive text-sm font-medium">
-                          {j + 1}
-                        </span>
-                        <span className="text-text-secondary text-[15px]">
-                          {step}
-                        </span>
-                      </div>
-                      {j < 2 && (
-                        <div className="ml-4 h-4 border-l-2 border-dashed border-olive/30" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 p-4 bg-white rounded border border-olive/20">
-                  <p className="text-olive font-medium text-sm">
-                    18–24 months to power
-                  </p>
-                  <p className="text-text-muted text-sm mt-1">
-                    No grid queue. No substation. Direct, dedicated supply.
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
+          <FadeIn delay={0.15}>
+            <ComparisonToggle
+              className="mt-10"
+              optionA={{
+                title: "Grid Connection",
+                icon: Grid3X3,
+                color: "red",
+                items: [
+                  "Apply for grid connection (12+ months)",
+                  "Transmission network assessment",
+                  "Substation upgrade & grid works",
+                  "NEM registration & compliance",
+                  "Commission & energise",
+                ],
+                stat: "3–5 year wait time",
+                statLabel: "Subject to grid capacity, substation upgrades, regulatory approvals",
+              }}
+              optionB={{
+                title: "Brightwood Behind-the-Meter",
+                icon: Zap,
+                color: "olive",
+                items: [
+                  "Site secured with power & fibre access",
+                  "Solar + battery + gas built behind-the-meter",
+                  "Commission & deliver power",
+                ],
+                stat: "18–24 months to power",
+                statLabel: "No grid queue. No substation. Direct, dedicated supply.",
+              }}
+            />
+          </FadeIn>
         </div>
       </section>
 

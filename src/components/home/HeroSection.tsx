@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ArrowRight } from "lucide-react";
 
 function EnergyGrid() {
   const nodes = [
@@ -128,7 +128,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="font-serif text-[36px] sm:text-[48px] md:text-[60px] lg:text-[76px] xl:text-[84px] leading-[1.05] text-text-primary"
+              className="font-serif text-[36px] sm:text-[48px] md:text-[60px] lg:text-[72px] leading-[1.05] text-text-primary"
             >
               Dedicated Power for the AI Era
             </motion.h1>
@@ -151,13 +151,20 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
+              className="flex flex-wrap items-center gap-3 mt-8"
             >
               <Link
                 href="#problem"
-                className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 bg-olive text-white text-[15px] font-medium rounded-lg hover:bg-olive-dark transition-all duration-200 hover:shadow-lg"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-olive text-white text-[15px] font-medium rounded-lg hover:bg-olive-dark transition-all duration-200 hover:shadow-lg"
               >
-                Learn More
-                <ChevronDown size={18} />
+                See How It Works
+                <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center px-7 py-3.5 border-2 border-olive/30 text-olive text-[15px] font-medium rounded-lg hover:border-olive/50 hover:bg-olive/5 transition-all duration-200"
+              >
+                Talk to Us
               </Link>
             </motion.div>
           </div>

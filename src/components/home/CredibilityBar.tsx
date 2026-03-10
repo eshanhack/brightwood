@@ -17,12 +17,11 @@ const marqueeItems = [...companies, ...companies, ...companies];
 
 export default function CredibilityBar() {
   return (
-    <section className="py-14 border-t border-b border-divider overflow-hidden">
+    <section className="py-10 border-t border-b border-divider overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
         <FadeIn>
           <p className="text-center text-[13px] text-text-muted tracking-widest uppercase mb-10 font-medium">
-            Building power infrastructure for the world&apos;s leading data
-            centre operators
+            Powering infrastructure for
           </p>
         </FadeIn>
       </div>
