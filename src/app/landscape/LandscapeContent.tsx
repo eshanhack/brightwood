@@ -185,13 +185,13 @@ export default function LandscapeContent() {
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
                 href="/scale"
-                className="inline-flex items-center px-7 py-3.5 bg-white text-olive font-medium rounded-[7px] hover:bg-cream transition-colors duration-200"
+                className="inline-flex items-center px-7 py-3.5 bg-white text-olive font-medium rounded-lg hover:bg-cream transition-colors duration-200"
               >
                 Scale & Returns
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center px-7 py-3.5 border-2 border-white text-white font-medium rounded-[7px] hover:bg-white/10 transition-colors duration-200"
+                className="inline-flex items-center px-7 py-3.5 border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors duration-200"
               >
                 Get in Touch
               </Link>

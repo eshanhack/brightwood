@@ -334,7 +334,7 @@ export default function ScaleContent() {
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center mt-8 px-8 py-4 bg-white text-olive font-medium rounded-[7px] hover:bg-cream transition-colors duration-200"
+              className="inline-flex items-center mt-8 px-8 py-4 bg-white text-olive font-medium rounded-lg hover:bg-cream transition-colors duration-200"
             >
               Get in Touch
             </Link>

@@ -1,27 +1,32 @@
 "use client";
 
 import FadeIn from "@/components/FadeIn";
+import { DollarSign, Zap, Clock, TrendingUp } from "lucide-react";
 
 const stats = [
   {
     value: "$15B",
-    label: "Energy investment needed by 2035 (Moody's)",
+    label: "Energy investment needed by 2035 (Moody\u2019s)",
     accent: false,
+    icon: DollarSign,
   },
   {
     value: "6 GW",
     label: "Real data centre capacity needed (AEMO/Oxford Economics)",
     accent: false,
+    icon: Zap,
   },
   {
     value: "3\u20135 yrs",
     label: "Grid connection wait time",
     accent: true,
+    icon: Clock,
   },
   {
     value: "25%",
     label: "Annual DC demand growth rate",
     accent: false,
+    icon: TrendingUp,
   },
 ];
 
@@ -34,7 +39,7 @@ export default function ProblemSection() {
           <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
             The Grid Can&apos;t Keep Up
           </h2>
-          <p className="mt-4 text-lg text-text-secondary max-w-2xl leading-relaxed">
+          <p className="mt-4 text-lg text-text-secondary max-w-2xl leading-[1.7]">
             AI data centres are the fastest-growing electricity consumers on
             earth. Australia&apos;s grid cannot connect them fast enough.
           </p>
@@ -45,14 +50,20 @@ export default function ProblemSection() {
           {stats.map((stat, i) => (
             <FadeIn key={i} delay={i * 0.1}>
               <div
-                className={`p-6 rounded-lg ${
+                className={`p-6 rounded-lg card-hover ${
                   stat.accent
                     ? "bg-red-tint border-l-4 border-red"
                     : "bg-white border-l-4 border-olive"
                 }`}
               >
+                <stat.icon
+                  className={`w-5 h-5 mb-3 ${
+                    stat.accent ? "text-red" : "text-olive"
+                  }`}
+                  strokeWidth={1.5}
+                />
                 <p
-                  className={`font-serif text-[32px] md:text-[40px] ${
+                  className={`font-serif text-[28px] md:text-[36px] leading-none ${
                     stat.accent ? "text-red" : "text-olive"
                   }`}
                 >
@@ -73,7 +84,7 @@ export default function ProblemSection() {
               <h3 className="text-lg font-semibold text-red mb-3">
                 The Constraint
               </h3>
-              <p className="text-text-secondary leading-relaxed">
+              <p className="text-text-secondary leading-[1.7]">
                 AEMO received 44 GW of data centre connection requests — but
                 Oxford Economics found 6 in 7 MW is &apos;phantom demand.&apos;
                 Even so, metro grids are full. Western Sydney literally cannot
@@ -87,7 +98,7 @@ export default function ProblemSection() {
               <h3 className="text-lg font-semibold text-olive mb-3">
                 The Arbitrage
               </h3>
-              <p className="text-text-secondary leading-relaxed">
+              <p className="text-text-secondary leading-[1.7]">
                 World-class solar irradiance. Battery costs falling 11–16% per
                 year. Cheap regional land. Existing gas pipelines. The cost of
                 building dedicated power is well below what hyperscalers will

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const footerLinks = {
   Company: [
-    { label: "About", href: "/" },
+    { label: "Home", href: "/" },
     { label: "Contact", href: "/contact" },
   ],
   Learn: [
@@ -11,11 +11,7 @@ const footerLinks = {
   ],
   Investors: [
     { label: "Scale & Returns", href: "/scale" },
-    { label: "Competitive Landscape", href: "/landscape" },
-  ],
-  Legal: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Use", href: "#" },
+    { label: "Landscape", href: "/landscape" },
   ],
 };
 
@@ -23,13 +19,16 @@ export default function Footer() {
   return (
     <footer className="bg-cream border-t border-divider">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-16">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="font-serif text-xl text-olive">
+            <Link
+              href="/"
+              className="font-serif text-xl text-olive hover:text-olive-dark transition-colors"
+            >
               Brightwood
             </Link>
-            <p className="mt-3 text-sm text-text-muted leading-relaxed">
+            <p className="mt-3 text-sm text-text-muted leading-relaxed max-w-[240px]">
               Dedicated power infrastructure for AI data centres in regional
               Australia.
             </p>
@@ -38,7 +37,7 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <h4 className="text-sm font-medium text-text-primary mb-4">
+              <h4 className="text-sm font-semibold text-text-primary mb-4 tracking-wide uppercase">
                 {title}
               </h4>
               <ul className="space-y-2.5">
@@ -46,7 +45,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-text-muted hover:text-text-secondary transition-colors duration-200"
+                      className="text-sm text-text-muted hover:text-olive transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -58,7 +57,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-16 pt-8 border-t border-divider flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-16 pt-8 border-t border-divider flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-sm text-text-muted">
             &copy; 2026 Brightwood Energy Pty Ltd
           </p>

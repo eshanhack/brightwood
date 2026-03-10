@@ -8,7 +8,7 @@
   --color-olive-dark: #4A5A23;
   --color-text-primary: #2B2723;
   --color-text-secondary: #6B6560;
-  --color-text-muted: #9E9890;
+  --color-text-muted: #857F78;
   --color-red: #CD412B;
   --color-red-tint: #FFF0ED;
   --color-divider: #E8E5E1;
@@ -43,65 +43,78 @@ body {
   color: #FFFFFF;
 }
 
-/* Logo bar marquee animation */
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid #5C6F2D;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Marquee */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 40s linear infinite;
+  will-change: transform;
 }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }
 
-/* Energy flow animation */
-@keyframes energyPulse {
-  0%, 100% { opacity: 0.3; r: 3; }
-  50% { opacity: 1; r: 5; }
-}
-
-@keyframes flowRight {
-  0% { transform: translateX(0); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateX(100px); opacity: 0; }
-}
-
+/* Energy node glow */
 @keyframes nodeGlow {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(92, 111, 45, 0.3)); }
-  50% { filter: drop-shadow(0 0 12px rgba(92, 111, 45, 0.6)); }
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(92, 111, 45, 0.2)); }
+  50% { filter: drop-shadow(0 0 14px rgba(92, 111, 45, 0.5)); }
 }
 
 .energy-node {
   animation: nodeGlow 3s ease-in-out infinite;
 }
 
-.energy-particle {
-  animation: energyPulse 2s ease-in-out infinite;
-}
-
-/* Pricing bar animation */
-@keyframes growWidth {
-  from { width: 0; }
-}
-
-/* Scrollbar styling */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: #FAF9F6;
 }
-
 ::-webkit-scrollbar-thumb {
   background: #E8E5E1;
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #9E9890;
+  background: #857F78;
+}
+/* Firefox scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #E8E5E1 #FAF9F6;
+}
+
+/* Smooth card hover class */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(43, 39, 35, 0.08);
+}
+
+/* Spinner for loading */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
 }

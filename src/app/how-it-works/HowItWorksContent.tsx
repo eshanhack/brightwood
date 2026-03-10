@@ -53,8 +53,7 @@ const techSpecs = [
   },
 ];
 
-// 24h power profile data
-const hours = Array.from({ length: 24 }, (_, i) => i);
+const FONT = "Inter, system-ui, sans-serif";
 
 function PowerProfileChart() {
   const solar = [0, 0, 0, 0, 0, 5, 30, 70, 110, 140, 155, 160, 155, 140, 120, 90, 50, 15, 0, 0, 0, 0, 0, 0];
@@ -108,7 +107,7 @@ function PowerProfileChart() {
         return (
           <g key={v}>
             <line x1={padL} y1={y} x2={chartW - padR} y2={y} stroke="#E8E5E1" strokeWidth="1" />
-            <text x={padL - 8} y={y + 4} textAnchor="end" className="text-[10px] fill-text-muted">{v}</text>
+            <text x={padL - 8} y={y + 4} textAnchor="end" fill="#857F78" fontSize="10" fontFamily={FONT}>{v}</text>
           </g>
         );
       })}
@@ -117,7 +116,7 @@ function PowerProfileChart() {
       {[0, 4, 8, 12, 16, 20].map((h) => {
         const x = padL + (h / 23) * plotW;
         return (
-          <text key={h} x={x} y={chartH - 5} textAnchor="middle" className="text-[10px] fill-text-muted">
+          <text key={h} x={x} y={chartH - 5} textAnchor="middle" fill="#857F78" fontSize="10" fontFamily={FONT}>
             {h.toString().padStart(2, "0")}:00
           </text>
         );
@@ -148,13 +147,13 @@ function PowerProfileChart() {
       <text
         x={chartW - padR + 4}
         y={padT + plotH - (demand / maxY) * plotH + 4}
-        className="text-[10px] fill-red font-medium"
+        fill="#CD412B" fontSize="10" fontWeight="500" fontFamily={FONT}
       >
         DC Load
       </text>
 
       {/* Y-axis label */}
-      <text x={12} y={padT + plotH / 2} textAnchor="middle" className="text-[10px] fill-text-muted" transform={`rotate(-90, 12, ${padT + plotH / 2})`}>
+      <text x={12} y={padT + plotH / 2} textAnchor="middle" fill="#857F78" fontSize="10" fontFamily={FONT} transform={`rotate(-90, 12, ${padT + plotH / 2})`}>
         MW
       </text>
     </svg>
@@ -399,13 +398,13 @@ export default function HowItWorksContent() {
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
                 href="/landscape"
-                className="inline-flex items-center px-7 py-3.5 bg-white text-olive font-medium rounded-[7px] hover:bg-cream transition-colors duration-200"
+                className="inline-flex items-center px-7 py-3.5 bg-white text-olive font-medium rounded-lg hover:bg-cream transition-colors duration-200"
               >
                 Competitive Landscape
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center px-7 py-3.5 border-2 border-white text-white font-medium rounded-[7px] hover:bg-white/10 transition-colors duration-200"
+                className="inline-flex items-center px-7 py-3.5 border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors duration-200"
               >
                 Get in Touch
               </Link>

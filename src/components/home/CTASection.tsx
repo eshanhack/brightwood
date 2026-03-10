@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import FadeIn from "@/components/FadeIn";
+import { ArrowRight } from "lucide-react";
 
 export default function CTASection() {
   return (
@@ -11,15 +12,16 @@ export default function CTASection() {
           <h2 className="font-serif text-[36px] md:text-[44px] text-white">
             The Opportunity
           </h2>
-          <p className="mt-4 text-lg text-white/80 leading-relaxed max-w-xl mx-auto">
+          <p className="mt-4 text-lg text-white/80 leading-[1.7] max-w-xl mx-auto">
             Raising $5–15M AUD in development capital. The window to establish
             position is 18–24 months.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center mt-8 px-8 py-4 bg-white text-olive font-medium rounded-[7px] hover:bg-cream transition-colors duration-200"
+            className="inline-flex items-center gap-2 mt-8 px-8 py-4 bg-white text-olive font-medium rounded-lg hover:bg-cream transition-all duration-200 hover:shadow-lg"
           >
             Get in Touch
+            <ArrowRight size={18} />
           </Link>
         </FadeIn>
       </div>
