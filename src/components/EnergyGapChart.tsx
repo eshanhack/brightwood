@@ -4,55 +4,69 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
 /*
- * Data points derived from AEMO ESOO 2025, Oxford Economics, CEFC/Baringa:
- *   - Grid available capacity for new DC connections (declining as coal retires + demand grows)
- *   - Data centre power demand (growing ~25% p.a. from ~0.5 GW in 2024)
- *   - The gap = unmet demand = the Brightwood opportunity
+ * Pitch-deck style chart: NEM Demand, Grid Reliable Supply, DC Demand
  *
- * Units: GW (capacity/demand)
+ * Based on AEMO ESOO 2025 Step Change, CEFC/Baringa Dec 2025:
+ *   - Grid reliable supply declining as 11 GW coal retires by 2035
+ *   - NEM base demand growing slowly (population, EVs, electrification)
+ *   - Data centre demand growing ~25% CAGR from ~0.5 GW
+ *   - Total demand = NEM base + DC demand
+ *   - Shortfall = total demand − reliable supply (where positive)
+ *
+ * Units: GW
  */
 
 const YEARS = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
 
-// Available grid capacity for NEW data centre connections (GW)
-// Declining as coal retires (11 GW by 2035) and existing demand grows
-const gridCapacity = [1.2, 1.1, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.5, 0.4, 0.4, 0.3];
+// Grid reliable supply (GW) — declining as coal retires
+const reliableSupply = [33.0, 32.5, 32.0, 31.0, 30.0, 29.5, 29.0, 28.5, 28.0, 27.5, 27.0, 26.0];
 
-// Data centre power demand (GW) — ~25% CAGR from 0.5 GW base
+// NEM base demand excluding DCs (GW) — slow organic growth
+const nemBase = [32.0, 32.3, 32.6, 33.0, 33.3, 33.6, 34.0, 34.3, 34.7, 35.0, 35.4, 35.8];
+
+// Data centre demand (GW) — ~25% CAGR
 const dcDemand = [0.5, 0.7, 0.9, 1.1, 1.4, 1.8, 2.3, 2.9, 3.6, 4.2, 5.0, 6.0];
+
+// Derived: total demand = NEM base + DC
+const totalDemand = nemBase.map((n, i) => n + dcDemand[i]);
 
 const FONT = "Inter, system-ui, sans-serif";
 
-// Chart dimensions
-const W = 800;
-const H = 340;
-const PAD = { top: 20, right: 30, bottom: 50, left: 55 };
+// Chart dims
+const W = 820;
+const H = 380;
+const PAD = { top: 20, right: 60, bottom: 50, left: 55 };
 const PLOT_W = W - PAD.left - PAD.right;
 const PLOT_H = H - PAD.top - PAD.bottom;
-const MAX_Y = 7;
+const MIN_Y = 22;
+const MAX_Y = 44;
+const Y_RANGE = MAX_Y - MIN_Y;
 
 function xPos(i: number) {
   return PAD.left + (i / (YEARS.length - 1)) * PLOT_W;
 }
 function yPos(v: number) {
-  return PAD.top + PLOT_H - (v / MAX_Y) * PLOT_H;
+  return PAD.top + PLOT_H - ((v - MIN_Y) / Y_RANGE) * PLOT_H;
 }
 
-function toLinePath(data: number[]) {
+function toLinePath(data: number[], count: number) {
   return data
+    .slice(0, count)
     .map((v, i) => `${i === 0 ? "M" : "L"}${xPos(i).toFixed(1)},${yPos(v).toFixed(1)}`)
     .join(" ");
 }
 
-function toAreaPath(data: number[], baseline: number[]) {
-  const top = data
+function toAreaPath(topData: number[], bottomData: number[], count: number) {
+  const top = topData
+    .slice(0, count)
     .map((v, i) => `${i === 0 ? "M" : "L"}${xPos(i).toFixed(1)},${yPos(v).toFixed(1)}`)
     .join(" ");
-  const bottom = [...baseline]
+  const bottom = bottomData
+    .slice(0, count)
     .reverse()
     .map(
       (v, j) =>
-        `L${xPos(baseline.length - 1 - j).toFixed(1)},${yPos(v).toFixed(1)}`
+        `L${xPos(count - 1 - j).toFixed(1)},${yPos(v).toFixed(1)}`
     )
     .join(" ");
   return `${top} ${bottom} Z`;
@@ -60,9 +74,11 @@ function toAreaPath(data: number[], baseline: number[]) {
 
 interface TooltipData {
   year: number;
-  grid: number;
-  demand: number;
-  gap: number;
+  supply: number;
+  nemBase: number;
+  dc: number;
+  total: number;
+  shortfall: number;
   x: number;
 }
 
@@ -73,7 +89,6 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const hasAnimated = useRef(false);
 
-  // Animate drawing on scroll
   useEffect(() => {
     if (!isInView || hasAnimated.current) return;
     hasAnimated.current = true;
@@ -88,12 +103,11 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
     }
 
     const start = performance.now();
-    const duration = 1800;
+    const duration = 2000;
 
     function tick(now: number) {
       const elapsed = now - start;
       const t = Math.min(elapsed / duration, 1);
-      // ease out cubic
       const eased = 1 - Math.pow(1 - t, 3);
       setProgress(eased);
       if (t < 1) requestAnimationFrame(tick);
@@ -101,16 +115,13 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
     requestAnimationFrame(tick);
   }, [isInView]);
 
-  // Clip data to current animation progress
-  const visibleCount = Math.max(1, Math.round(progress * YEARS.length));
-  const clippedGrid = gridCapacity.slice(0, visibleCount);
-  const clippedDemand = dcDemand.slice(0, visibleCount);
+  const visibleCount = Math.max(2, Math.round(progress * YEARS.length));
 
-  // For the gap area, only show where demand > grid
-  const gapTopData = clippedDemand.map((d, i) =>
-    d > clippedGrid[i] ? d : clippedGrid[i]
+  // Shortfall area: where total demand > reliable supply
+  const shortfallTop = totalDemand.slice(0, visibleCount);
+  const shortfallBottom = shortfallTop.map((td, i) =>
+    Math.max(td, reliableSupply[i]) === td ? reliableSupply[i] : td
   );
-  const gapBottomData = clippedGrid.slice(0, visibleCount);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<SVGSVGElement>) => {
@@ -122,12 +133,15 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
       const clamped = Math.max(0, Math.min(idx, YEARS.length - 1));
 
       if (clamped < visibleCount) {
-        const gap = Math.max(0, dcDemand[clamped] - gridCapacity[clamped]);
+        const total = totalDemand[clamped];
+        const supply = reliableSupply[clamped];
         setTooltip({
           year: YEARS[clamped],
-          grid: gridCapacity[clamped],
-          demand: dcDemand[clamped],
-          gap,
+          supply,
+          nemBase: nemBase[clamped],
+          dc: dcDemand[clamped],
+          total,
+          shortfall: Math.max(0, total - supply),
           x: xPos(clamped),
         });
       }
@@ -135,24 +149,31 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
     [visibleCount]
   );
 
-  const gapAtEnd = dcDemand[dcDemand.length - 1] - gridCapacity[gridCapacity.length - 1];
+  const finalShortfall = totalDemand[11] - reliableSupply[11];
+  const lastIdx = YEARS.length - 1;
 
   return (
     <div ref={containerRef} className={className}>
       <div className="bg-white rounded-xl border border-divider p-4 sm:p-6 lg:p-8">
         {/* Legend */}
-        <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 text-sm">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 mb-6 text-[13px]">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-olive" />
-            <span className="text-text-secondary">Available grid capacity for DCs</span>
+            <span className="w-6 h-0.5 bg-olive rounded" />
+            <span className="text-text-secondary">Grid reliable supply</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-red" />
-            <span className="text-text-secondary">Data centre power demand</span>
+            <span className="w-6 h-0.5 bg-text-muted rounded" />
+            <span className="text-text-secondary">NEM demand (excl. DCs)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-4 h-3 rounded-sm bg-red/15" />
-            <span className="text-text-secondary">Unmet demand (the gap)</span>
+            <span className="w-4 h-3 rounded-sm bg-red/20 border border-red/30" />
+            <span className="text-text-secondary">Data centre demand</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-4 h-3 rounded-sm bg-red/10 border border-red/20" style={{
+              background: "repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(205,65,43,0.15) 2px, rgba(205,65,43,0.15) 4px)"
+            }} />
+            <span className="text-text-secondary">Shortfall</span>
           </div>
         </div>
 
@@ -161,14 +182,14 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
           viewBox={`0 0 ${W} ${H}`}
           className="w-full cursor-crosshair select-none"
           role="img"
-          aria-label="Chart showing growing gap between data centre power demand and available grid capacity from 2024 to 2035"
+          aria-label="Chart showing NEM demand, data centre demand growth, and declining grid reliable supply from 2024 to 2035"
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setTooltip(null)}
         >
-          <title>Energy Gap: Grid Capacity vs Data Centre Demand</title>
+          <title>Australia&apos;s Energy Gap: Supply vs Demand 2024–2035</title>
 
           {/* Y-axis grid lines */}
-          {[0, 1, 2, 3, 4, 5, 6, 7].map((v) => (
+          {[24, 26, 28, 30, 32, 34, 36, 38, 40, 42].map((v) => (
             <g key={v}>
               <line
                 x1={PAD.left}
@@ -183,7 +204,7 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
                 y={yPos(v) + 4}
                 textAnchor="end"
                 fill="#857F78"
-                fontSize="11"
+                fontSize="10"
                 fontFamily={FONT}
               >
                 {v}
@@ -212,26 +233,56 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
               y={H - 15}
               textAnchor="middle"
               fill="#857F78"
-              fontSize="11"
+              fontSize="10"
               fontFamily={FONT}
             >
               {year}
             </text>
           ))}
 
-          {/* Gap area (red tint between demand and grid where demand > grid) */}
+          {/* DC demand area (stacked on NEM base) */}
           {visibleCount > 1 && (
             <path
-              d={toAreaPath(gapTopData, gapBottomData)}
+              d={toAreaPath(
+                totalDemand.slice(0, visibleCount),
+                nemBase.slice(0, visibleCount),
+                visibleCount
+              )}
               fill="#CD412B"
-              opacity="0.12"
+              opacity="0.18"
             />
           )}
 
-          {/* Grid capacity line */}
+          {/* Shortfall area (hatched — where total > supply) */}
+          {visibleCount > 1 && (
+            <>
+              <defs>
+                <pattern
+                  id="shortfall-hatch"
+                  patternUnits="userSpaceOnUse"
+                  width="6"
+                  height="6"
+                  patternTransform="rotate(45)"
+                >
+                  <line x1="0" y1="0" x2="0" y2="6" stroke="#CD412B" strokeWidth="1.5" opacity="0.25" />
+                </pattern>
+              </defs>
+              <path
+                d={toAreaPath(shortfallTop, shortfallBottom, visibleCount)}
+                fill="url(#shortfall-hatch)"
+              />
+              <path
+                d={toAreaPath(shortfallTop, shortfallBottom, visibleCount)}
+                fill="#CD412B"
+                opacity="0.06"
+              />
+            </>
+          )}
+
+          {/* Reliable supply line (olive, thick) */}
           {visibleCount > 1 && (
             <path
-              d={toLinePath(clippedGrid)}
+              d={toLinePath(reliableSupply, visibleCount)}
               fill="none"
               stroke="#5C6F2D"
               strokeWidth="2.5"
@@ -240,10 +291,23 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
             />
           )}
 
-          {/* DC demand line */}
+          {/* NEM base demand line (grey) */}
           {visibleCount > 1 && (
             <path
-              d={toLinePath(clippedDemand)}
+              d={toLinePath(nemBase, visibleCount)}
+              fill="none"
+              stroke="#857F78"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="6,4"
+            />
+          )}
+
+          {/* Total demand line (NEM + DC, red, bold) */}
+          {visibleCount > 1 && (
+            <path
+              d={toLinePath(totalDemand, visibleCount)}
               fill="none"
               stroke="#CD412B"
               strokeWidth="2.5"
@@ -252,59 +316,87 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
             />
           )}
 
-          {/* Dots on lines */}
-          {clippedGrid.map((v, i) => (
-            <circle
-              key={`g-${i}`}
-              cx={xPos(i)}
-              cy={yPos(v)}
-              r="3.5"
-              fill="#5C6F2D"
-              stroke="#FAF9F6"
-              strokeWidth="1.5"
-            />
-          ))}
-          {clippedDemand.map((v, i) => (
-            <circle
-              key={`d-${i}`}
-              cx={xPos(i)}
-              cy={yPos(v)}
-              r="3.5"
-              fill="#CD412B"
-              stroke="#FAF9F6"
-              strokeWidth="1.5"
-            />
-          ))}
-
-          {/* Gap label at end of animation */}
-          {progress > 0.9 && (
+          {/* End-of-line labels (once fully drawn) */}
+          {progress > 0.92 && (
             <>
-              {/* Gap bracket */}
-              <line
-                x1={xPos(11) + 14}
-                y1={yPos(dcDemand[11])}
-                x2={xPos(11) + 14}
-                y2={yPos(gridCapacity[11])}
-                stroke="#CD412B"
-                strokeWidth="2"
-                strokeDasharray="4,3"
-                opacity={progress > 0.95 ? 1 : 0}
-              />
               <text
-                x={xPos(11) + 28}
-                y={(yPos(dcDemand[11]) + yPos(gridCapacity[11])) / 2 + 4}
-                fill="#CD412B"
-                fontSize="13"
+                x={xPos(lastIdx) + 8}
+                y={yPos(reliableSupply[lastIdx]) + 4}
+                fill="#5C6F2D"
+                fontSize="10"
                 fontWeight="600"
                 fontFamily={FONT}
-                opacity={progress > 0.95 ? 1 : 0}
               >
-                {gapAtEnd.toFixed(1)} GW gap
+                Supply
+              </text>
+              <text
+                x={xPos(lastIdx) + 8}
+                y={yPos(totalDemand[lastIdx]) + 4}
+                fill="#CD412B"
+                fontSize="10"
+                fontWeight="600"
+                fontFamily={FONT}
+              >
+                Demand
               </text>
             </>
           )}
 
-          {/* Tooltip hover line + values */}
+          {/* Shortfall bracket at 2035 */}
+          {progress > 0.95 && (
+            <>
+              <line
+                x1={xPos(lastIdx) - 8}
+                y1={yPos(totalDemand[lastIdx])}
+                x2={xPos(lastIdx) - 8}
+                y2={yPos(reliableSupply[lastIdx])}
+                stroke="#CD412B"
+                strokeWidth="2"
+              />
+              {/* Top tick */}
+              <line
+                x1={xPos(lastIdx) - 13}
+                y1={yPos(totalDemand[lastIdx])}
+                x2={xPos(lastIdx) - 3}
+                y2={yPos(totalDemand[lastIdx])}
+                stroke="#CD412B"
+                strokeWidth="2"
+              />
+              {/* Bottom tick */}
+              <line
+                x1={xPos(lastIdx) - 13}
+                y1={yPos(reliableSupply[lastIdx])}
+                x2={xPos(lastIdx) - 3}
+                y2={yPos(reliableSupply[lastIdx])}
+                stroke="#CD412B"
+                strokeWidth="2"
+              />
+              {/* Label */}
+              <text
+                x={xPos(lastIdx) - 16}
+                y={(yPos(totalDemand[lastIdx]) + yPos(reliableSupply[lastIdx])) / 2 + 4}
+                textAnchor="end"
+                fill="#CD412B"
+                fontSize="12"
+                fontWeight="700"
+                fontFamily={FONT}
+              >
+                {finalShortfall.toFixed(0)} GW
+              </text>
+              <text
+                x={xPos(lastIdx) - 16}
+                y={(yPos(totalDemand[lastIdx]) + yPos(reliableSupply[lastIdx])) / 2 + 17}
+                textAnchor="end"
+                fill="#CD412B"
+                fontSize="10"
+                fontFamily={FONT}
+              >
+                shortfall
+              </text>
+            </>
+          )}
+
+          {/* Tooltip hover */}
           {tooltip && (
             <>
               <line
@@ -317,85 +409,69 @@ export default function EnergyGapChart({ className = "" }: { className?: string 
                 strokeDasharray="3,3"
                 opacity="0.3"
               />
+              {/* Highlight dots */}
+              <circle cx={tooltip.x} cy={yPos(tooltip.supply)} r="5" fill="#5C6F2D" stroke="#FAF9F6" strokeWidth="2" />
+              <circle cx={tooltip.x} cy={yPos(tooltip.total)} r="5" fill="#CD412B" stroke="#FAF9F6" strokeWidth="2" />
+              <circle cx={tooltip.x} cy={yPos(tooltip.nemBase)} r="4" fill="#857F78" stroke="#FAF9F6" strokeWidth="2" />
+
               {/* Tooltip box */}
-              <rect
-                x={tooltip.x > W / 2 ? tooltip.x - 155 : tooltip.x + 10}
-                y={PAD.top + 8}
-                width="145"
-                height="76"
-                rx="6"
-                fill="#3D3B38"
-                opacity="0.92"
-              />
-              <text
-                x={tooltip.x > W / 2 ? tooltip.x - 82 : tooltip.x + 82}
-                y={PAD.top + 28}
-                textAnchor="middle"
-                fill="#FFFFFF"
-                fontSize="12"
-                fontWeight="600"
-                fontFamily={FONT}
-              >
-                {tooltip.year}
-              </text>
-              <text
-                x={tooltip.x > W / 2 ? tooltip.x - 140 : tooltip.x + 24}
-                y={PAD.top + 46}
-                fill="#8BA04A"
-                fontSize="11"
-                fontFamily={FONT}
-              >
-                Grid: {tooltip.grid.toFixed(1)} GW
-              </text>
-              <text
-                x={tooltip.x > W / 2 ? tooltip.x - 140 : tooltip.x + 24}
-                y={PAD.top + 62}
-                fill="#E87070"
-                fontSize="11"
-                fontFamily={FONT}
-              >
-                Demand: {tooltip.demand.toFixed(1)} GW
-              </text>
-              <text
-                x={tooltip.x > W / 2 ? tooltip.x - 140 : tooltip.x + 24}
-                y={PAD.top + 78}
-                fill="#FFFFFF"
-                fontSize="11"
-                fontWeight="600"
-                fontFamily={FONT}
-              >
-                Gap: {tooltip.gap.toFixed(1)} GW
-              </text>
+              {(() => {
+                const boxW = 175;
+                const boxH = 100;
+                const bx = tooltip.x > W / 2 ? tooltip.x - boxW - 14 : tooltip.x + 14;
+                const by = PAD.top + 8;
+                return (
+                  <>
+                    <rect x={bx} y={by} width={boxW} height={boxH} rx="6" fill="#3D3B38" opacity="0.94" />
+                    <text x={bx + boxW / 2} y={by + 18} textAnchor="middle" fill="#FFFFFF" fontSize="12" fontWeight="700" fontFamily={FONT}>
+                      {tooltip.year}
+                    </text>
+                    <text x={bx + 12} y={by + 38} fill="#8BA04A" fontSize="11" fontFamily={FONT}>
+                      Reliable supply: {tooltip.supply.toFixed(1)} GW
+                    </text>
+                    <text x={bx + 12} y={by + 55} fill="#C0BDB8" fontSize="11" fontFamily={FONT}>
+                      NEM demand: {tooltip.nemBase.toFixed(1)} GW
+                    </text>
+                    <text x={bx + 12} y={by + 72} fill="#E87070" fontSize="11" fontFamily={FONT}>
+                      + DC demand: {tooltip.dc.toFixed(1)} GW
+                    </text>
+                    {tooltip.shortfall > 0 && (
+                      <text x={bx + 12} y={by + 91} fill="#FFFFFF" fontSize="11" fontWeight="700" fontFamily={FONT}>
+                        Shortfall: {tooltip.shortfall.toFixed(1)} GW
+                      </text>
+                    )}
+                  </>
+                );
+              })()}
             </>
           )}
         </svg>
 
         {/* Caption */}
-        <p className="mt-4 text-xs text-text-muted/60 text-center">
-          Illustrative projection based on AEMO ESOO 2025, CEFC/Baringa Dec 2025,
-          Oxford Economics Nov 2025. Hover/tap for values.
+        <p className="mt-3 text-xs text-text-muted/60 text-center">
+          Illustrative projection based on AEMO ESOO 2025, CEFC/Baringa Dec 2025, Oxford Economics Nov 2025. Hover for detail.
         </p>
       </div>
 
-      {/* Callout stat — animated */}
-      {progress > 0.9 && (
+      {/* Callout stat */}
+      {progress > 0.92 && (
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mt-6 p-5 bg-red-tint rounded-lg border border-red/20 flex items-center gap-4 max-w-xl"
+          className="mt-6 p-5 bg-red-tint rounded-lg border border-red/20 flex items-center gap-4 max-w-2xl"
         >
           <div className="shrink-0 w-14 h-14 rounded-full bg-red/10 flex items-center justify-center">
             <span className="font-serif text-xl text-red">
-              {gapAtEnd.toFixed(1)}
+              {finalShortfall.toFixed(0)}
             </span>
           </div>
           <div>
             <p className="font-semibold text-text-primary text-[15px]">
-              GW of unmet demand by 2035
+              GW shortfall by 2035 — and data centres are driving most of it
             </p>
             <p className="text-text-muted text-sm mt-0.5">
-              The grid can&apos;t close this gap. Dedicated power can.
+              Coal is retiring. Demand is surging. The grid can&apos;t close this gap. Dedicated power can.
             </p>
           </div>
         </motion.div>
