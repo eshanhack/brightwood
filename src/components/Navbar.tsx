@@ -61,7 +61,7 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[72px]">
+          <div className="flex items-center justify-between h-[60px] sm:h-[72px]">
             {/* Logo */}
             <Link href="/" className="flex items-center group">
               <span className="font-serif text-[22px] text-olive tracking-tight group-hover:text-olive-dark transition-colors duration-200">
@@ -131,7 +131,7 @@ export default function Navbar() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm bg-cream shadow-2xl pt-[72px]"
+              className="fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm bg-cream shadow-2xl pt-[60px] sm:pt-[72px]"
             >
               <div className="flex flex-col px-6 py-8 gap-1 h-full">
                 {navLinks.map((link, i) => (

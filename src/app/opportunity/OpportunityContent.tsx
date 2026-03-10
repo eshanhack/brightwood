@@ -90,11 +90,11 @@ export default function OpportunityContent() {
           <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {demandStats.map((stat, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <div className="p-6 bg-cream rounded-lg border-l-4 border-olive">
-                  <p className="font-serif text-[30px] md:text-[36px] text-olive">
+                <div className="p-6 bg-cream rounded-lg border-l-4 border-olive card-hover h-full">
+                  <p className="font-serif text-[30px] md:text-[36px] text-olive leading-none">
                     {stat.value}
                   </p>
-                  <p className="mt-2 text-sm text-text-secondary leading-snug">
+                  <p className="mt-3 text-sm text-text-secondary leading-snug">
                     {stat.label}
                   </p>
                 </div>
@@ -169,7 +169,7 @@ export default function OpportunityContent() {
           <div className="mt-16 grid md:grid-cols-2 gap-6">
             {sovereigntyReqs.map((req, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <div className="p-8 bg-white rounded-lg border border-divider">
+                <div className="p-8 bg-white rounded-lg border border-divider card-hover h-full">
                   <req.icon className="w-7 h-7 text-olive mb-4" strokeWidth={1.5} />
                   <h3 className="font-serif text-xl text-text-primary mb-2">
                     {req.title}

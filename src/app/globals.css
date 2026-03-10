@@ -62,8 +62,15 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
+  .animate-marquee,
+  .energy-node {
+    animation: none !important;
+  }
+  .card-hover {
+    transition: none !important;
+  }
+  .card-hover:hover {
+    transform: none;
   }
 }
 
@@ -117,4 +124,12 @@ html {
   border-top-color: white;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
+}
+
+/* Print */
+@media print {
+  nav, footer, .animate-marquee { display: none !important; }
+  body { background: white !important; color: black !important; }
+  section { padding-top: 2rem !important; padding-bottom: 2rem !important; break-inside: avoid; }
+  * { animation: none !important; transition: none !important; }
 }

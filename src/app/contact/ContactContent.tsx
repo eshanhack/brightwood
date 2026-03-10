@@ -12,6 +12,7 @@ const inputClasses =
 
 export default function ContactContent() {
   const [formState, setFormState] = useState<FormState>("idle");
+  const isLoading = formState === "loading";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -141,8 +142,9 @@ export default function ContactContent() {
                     id="name"
                     name="name"
                     required
+                    disabled={isLoading}
                     autoComplete="name"
-                    className={inputClasses}
+                    className={`${inputClasses} disabled:opacity-60 disabled:cursor-not-allowed`}
                     placeholder="Your name"
                   />
                 </div>
@@ -158,8 +160,9 @@ export default function ContactContent() {
                     id="email"
                     name="email"
                     required
+                    disabled={isLoading}
                     autoComplete="email"
-                    className={inputClasses}
+                    className={`${inputClasses} disabled:opacity-60 disabled:cursor-not-allowed`}
                     placeholder="you@example.com"
                   />
                 </div>
@@ -174,8 +177,9 @@ export default function ContactContent() {
                     type="text"
                     id="company"
                     name="company"
+                    disabled={isLoading}
                     autoComplete="organization"
-                    className={inputClasses}
+                    className={`${inputClasses} disabled:opacity-60 disabled:cursor-not-allowed`}
                     placeholder="Your role and company"
                   />
                 </div>
@@ -191,15 +195,16 @@ export default function ContactContent() {
                     name="message"
                     rows={5}
                     required
+                    disabled={isLoading}
                     maxLength={2000}
-                    className={`${inputClasses} resize-none`}
+                    className={`${inputClasses} resize-none disabled:opacity-60 disabled:cursor-not-allowed`}
                     placeholder="Tell us about your interest..."
                   />
                 </div>
 
                 {/* Error message */}
                 {formState === "error" && (
-                  <div className="flex items-center gap-2 p-3 bg-red-tint rounded-lg text-red text-sm">
+                  <div role="alert" className="flex items-center gap-2 p-3 bg-red-tint rounded-lg text-red text-sm">
                     <AlertCircle size={16} />
                     Something went wrong. Please try again or email us directly.
                   </div>
@@ -207,7 +212,7 @@ export default function ContactContent() {
 
                 <button
                   type="submit"
-                  disabled={formState === "loading"}
+                  disabled={isLoading}
                   className="w-full px-7 py-3.5 bg-olive text-white font-medium rounded-lg hover:bg-olive-dark transition-all duration-200 hover:shadow-md disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {formState === "loading" ? (

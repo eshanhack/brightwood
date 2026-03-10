@@ -150,7 +150,7 @@ export default function ScaleContent() {
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {phases.map((phase, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <div className="p-6 bg-cream rounded-lg border-t-4 border-olive h-full flex flex-col">
+                <div className="p-6 bg-cream rounded-lg border-t-4 border-olive h-full flex flex-col card-hover">
                   <div className="mb-4">
                     <p className="font-serif text-xl text-olive">
                       {phase.phase}
@@ -199,7 +199,7 @@ export default function ScaleContent() {
           <div className="mt-14 grid md:grid-cols-2 gap-6">
             {valuationScenarios.map((scenario, i) => (
               <FadeIn key={i} delay={i * 0.15}>
-                <div className="p-8 bg-white rounded-lg border border-divider">
+                <div className="p-8 bg-white rounded-lg border border-divider card-hover h-full">
                   <h3 className="font-serif text-2xl text-text-primary mb-6">
                     {scenario.scenario}
                   </h3>
@@ -310,7 +310,7 @@ export default function ScaleContent() {
           <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4">
             {exitBuyers.map((buyer, i) => (
               <FadeIn key={i} delay={i * 0.06}>
-                <div className="p-6 bg-white rounded-lg border border-divider text-center">
+                <div className="p-6 bg-white rounded-lg border border-divider text-center card-hover">
                   <span className="text-lg font-medium text-text-primary">
                     {buyer}
                   </span>

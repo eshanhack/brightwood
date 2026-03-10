@@ -100,7 +100,7 @@ export default function LandscapeContent() {
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {competitors.map((comp, i) => (
               <FadeIn key={i} delay={i * 0.08}>
-                <div className="p-8 bg-red-tint rounded-lg border-t-4 border-red h-full">
+                <div className="p-8 bg-red-tint rounded-lg border-t-4 border-red h-full card-hover">
                   <h3 className="font-serif text-xl text-text-primary">
                     {comp.title}
                   </h3>
@@ -154,7 +154,7 @@ export default function LandscapeContent() {
           <div className="mt-14 grid md:grid-cols-2 gap-6">
             {validations.map((val, i) => (
               <FadeIn key={i} delay={i * 0.15}>
-                <div className="p-8 bg-cream rounded-lg border-l-4 border-olive h-full">
+                <div className="p-8 bg-cream rounded-lg border-l-4 border-olive h-full card-hover">
                   <p className="font-serif text-[36px] text-olive mb-2">
                     {val.stat}
                   </p>

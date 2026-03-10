@@ -119,7 +119,7 @@ function EnergyGrid() {
 
 export default function HeroSection() {
   return (
-    <section className="min-h-[100dvh] flex items-center pt-[72px] relative overflow-hidden">
+    <section className="min-h-[100dvh] flex items-center pt-[60px] sm:pt-[72px] relative overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8 w-full py-16 lg:py-0">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-16 items-center">
           {/* Left — Text */}
@@ -128,7 +128,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="font-serif text-[44px] sm:text-[60px] lg:text-[76px] xl:text-[84px] leading-[1.05] text-text-primary"
+              className="font-serif text-[36px] sm:text-[48px] md:text-[60px] lg:text-[76px] xl:text-[84px] leading-[1.05] text-text-primary"
             >
               Dedicated Power for the AI Era
             </motion.h1>

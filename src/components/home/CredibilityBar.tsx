@@ -37,7 +37,7 @@ export default function CredibilityBar() {
             {marqueeItems.map((company, i) => (
               <span
                 key={i}
-                className="mx-8 md:mx-12 text-[18px] md:text-[22px] font-semibold text-text-muted/50 hover:text-olive transition-colors duration-300 select-none cursor-default"
+                className="mx-5 sm:mx-8 md:mx-12 text-[15px] sm:text-[18px] md:text-[22px] font-semibold text-text-muted/50 hover:text-olive transition-colors duration-300 select-none cursor-default"
               >
                 {company}
               </span>

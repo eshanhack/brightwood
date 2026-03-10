@@ -100,7 +100,8 @@ function PowerProfileChart() {
   }
 
   return (
-    <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full">
+    <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full" role="img" aria-label="24-hour power generation profile showing solar, battery, and gas output">
+      <title>24-Hour Power Generation Profile</title>
       {/* Grid lines */}
       {[0, 50, 100, 150].map((v) => {
         const y = padT + plotH - (v / maxY) * plotH;
