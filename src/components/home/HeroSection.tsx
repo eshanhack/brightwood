@@ -216,14 +216,17 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.7 }}
-              className="mt-10 flex flex-wrap gap-y-4 divide-x divide-divider"
+              className="mt-10 grid grid-cols-4 gap-0 border border-divider rounded-lg bg-white/60 backdrop-blur-sm overflow-hidden"
             >
               {heroStats.map((stat, i) => (
-                <div key={i} className="px-4 first:pl-0 last:pr-0">
-                  <p className="text-[11px] uppercase tracking-wider text-text-muted font-medium">
+                <div
+                  key={i}
+                  className={`px-3 py-3 ${i > 0 ? "border-l border-divider" : ""}`}
+                >
+                  <p className="text-[10px] uppercase tracking-wider text-text-muted font-medium leading-tight">
                     {stat.label}
                   </p>
-                  <p className="font-serif text-[20px] text-text-primary mt-0.5">
+                  <p className="font-serif text-[18px] text-text-primary mt-1 whitespace-nowrap">
                     {"staticValue" in stat && stat.staticValue ? (
                       stat.staticValue
                     ) : (
