@@ -1,20 +1,23 @@
 "use client";
 
 import FadeIn from "@/components/FadeIn";
+import { Cite } from "@/components/SourcesPanel";
 import { DollarSign, Zap, Clock, TrendingUp } from "lucide-react";
 
 const stats = [
   {
     value: "$15B",
-    label: "Energy investment needed by 2035 (Moody\u2019s)",
+    label: "Energy investment needed by 2035",
     accent: false,
     icon: DollarSign,
+    cite: 2,
   },
   {
     value: "6 GW",
-    label: "Real data centre capacity needed (AEMO/Oxford Economics)",
+    label: "Real data centre capacity needed",
     accent: false,
     icon: Zap,
+    cite: 3,
   },
   {
     value: "3\u20135 yrs",
@@ -71,6 +74,7 @@ export default function ProblemSection() {
                 </p>
                 <p className="mt-2 text-sm text-text-secondary leading-snug">
                   {stat.label}
+                  {"cite" in stat && stat.cite && <Cite n={stat.cite} />}
                 </p>
               </div>
             </FadeIn>
@@ -86,10 +90,10 @@ export default function ProblemSection() {
               </h3>
               <p className="text-text-secondary leading-[1.7]">
                 AEMO received 44 GW of data centre connection requests — but
-                Oxford Economics found 6 in 7 MW is &apos;phantom demand.&apos;
-                Even so, metro grids are full. Western Sydney literally cannot
-                connect new large-scale data centres. Developers are being
-                pushed to regional sites.
+                Oxford Economics found 6 in 7 MW is &apos;phantom
+                demand.&apos;<Cite n={3} /> Even so, metro grids are full.
+                Western Sydney literally cannot connect new large-scale data
+                centres. Developers are being pushed to regional sites.
               </p>
             </div>
           </FadeIn>
@@ -100,9 +104,9 @@ export default function ProblemSection() {
               </h3>
               <p className="text-text-secondary leading-[1.7]">
                 World-class solar irradiance. Battery costs falling 11–16% per
-                year. Cheap regional land. Existing gas pipelines. The cost of
-                building dedicated power is well below what hyperscalers will
-                pay for guaranteed supply.
+                year.<Cite n={4} /> Cheap regional land. Existing gas pipelines.
+                The cost of building dedicated power is well below what
+                hyperscalers will pay for guaranteed supply.
               </p>
             </div>
           </FadeIn>

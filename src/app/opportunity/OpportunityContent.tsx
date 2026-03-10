@@ -2,14 +2,15 @@
 
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import SourcesPanel, { Cite } from "@/components/SourcesPanel";
 import Link from "next/link";
 import { Shield, Landmark, HeartPulse, Swords, Clock, MapPin, Zap, TrendingUp } from "lucide-react";
 
 const demandStats = [
-  { value: "3.9 TWh", label: "Data centre consumption in FY25 (~2.2% of NEM demand)" },
-  { value: "12 TWh", label: "Projected consumption by FY30 (AEMO Step Change)" },
-  { value: "25.1%", label: "Annual demand growth rate" },
-  { value: "44 GW", label: "Connection requests received by AEMO" },
+  { value: "3.9 TWh", label: "Data centre consumption in FY25 (~2.2% of NEM demand)", cite: 1 },
+  { value: "12 TWh", label: "Projected consumption by FY30 (AEMO Step Change)", cite: 1 },
+  { value: "25.1%", label: "Annual demand growth rate", cite: 1 },
+  { value: "44 GW", label: "Connection requests received by AEMO", cite: 1 },
 ];
 
 const sovereigntyReqs = [
@@ -96,6 +97,7 @@ export default function OpportunityContent() {
                   </p>
                   <p className="mt-3 text-sm text-text-secondary leading-snug">
                     {stat.label}
+                    {"cite" in stat && stat.cite && <Cite n={stat.cite} />}
                   </p>
                 </div>
               </FadeIn>
@@ -110,11 +112,11 @@ export default function OpportunityContent() {
               <p className="text-text-secondary leading-relaxed">
                 AEMO received 44 GW of data centre connection requests, but
                 Oxford Economics found that 6 in 7 MW is &apos;phantom
-                demand&apos; — speculative applications that will never proceed.
-                The real need is approximately 6 GW. But even 6 GW overwhelms
-                metro grids. Western Sydney literally cannot connect new
-                large-scale data centres. The queue is years long, and
-                developers are being forced to look elsewhere.
+                demand&apos; — speculative applications that will never
+                proceed.<Cite n={2} /> The real need is approximately 6 GW. But
+                even 6 GW overwhelms metro grids. Western Sydney literally
+                cannot connect new large-scale data centres. The queue is years
+                long, and developers are being forced to look elsewhere.
               </p>
             </div>
           </FadeIn>
@@ -351,6 +353,14 @@ export default function OpportunityContent() {
           </div>
         </div>
       </section>
+
+      <SourcesPanel
+        sources={[
+          { id: 1, text: "AEMO / Oxford Economics, Data Centre Energy Demand Report, July 2025." },
+          { id: 2, text: "Oxford Economics, \u201CPhantom Demand: Separating Signal from Noise,\u201D November 2025." },
+          { id: 3, text: "AEMO 2025 Electricity Statement of Opportunities (ESOO), Step Change scenario." },
+        ]}
+      />
 
       {/* CTA */}
       <section className="bg-olive py-[100px] lg:py-[120px]">

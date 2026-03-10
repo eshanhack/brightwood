@@ -57,6 +57,16 @@ const faqItems = [
     answer:
       "Brightwood\u2019s target customers are the hyperscale cloud providers (AWS, Microsoft, Google, Meta) and Australian data centre operators (NEXTDC, Equinix, Macquarie Data Centres) expanding into regional sites. These are among the most creditworthy companies on earth \u2014 their PPA commitments are backed by investment-grade balance sheets.",
   },
+  {
+    question: "What about water usage?",
+    answer:
+      "Brightwood builds power stations, not data centres \u2014 our generation uses negligible water compared to coal-fired grid power. Solar panels need occasional washing. Batteries use zero water. Our gas backup engines are air-cooled. For the data centre precinct, we include water availability as a first-order site selection criterion and design in dry/hybrid cooling and water recycling.",
+  },
+  {
+    question: "Why include gas if the trend is toward 100% renewables?",
+    answer:
+      "We agree with the direction. Our facilities start at ~95% renewable from day one \u2014 gas runs less than 5% of hours, only during extended cloud events. It exists solely to guarantee the 99.99% uptime SLA that hyperscale customers contractually require. Each facility has a funded, engineered pathway to phase out gas and replace it with longer-duration battery storage within 5\u20138 years. This is a managed, time-bound transition \u2014 not a permanent gas dependency.",
+  },
 ];
 
 export default function FAQContent() {

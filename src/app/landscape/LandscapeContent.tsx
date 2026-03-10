@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import SourcesPanel from "@/components/SourcesPanel";
 import Link from "next/link";
 
 const competitors = [
@@ -39,7 +40,7 @@ const competitors = [
     title: "Quinbrook",
     subtitle: "Supernode, Brendale QLD",
     description:
-      "2 GW grid-connected data centre campus at Brendale with 780 MW BESS. Well-funded and credible. But it's one mega-site, grid-connected — can't serve the other 4+ GW of demand across regional Australia.",
+      "$3B+ integrated battery storage and data centre campus at Brendale, QLD. 780 MW BESS committed. Three high-voltage grid connections via South Pine substation. FIRB approved. Origin Energy as offtake partner. CBRE managing customer engagement. Well-funded and credible — but grid-connected at one metro-adjacent site. Australia needs ~6 GW distributed across multiple regions.",
   },
 ];
 
@@ -170,6 +171,14 @@ export default function LandscapeContent() {
           </div>
         </div>
       </section>
+
+      <SourcesPanel
+        sources={[
+          { id: 1, text: "PV Tech / FRV Australia, Microsoft 353 MW solar PPA announcement, 2025." },
+          { id: 2, text: "Blackstone, AirTrunk acquisition announcement, AUD $24B, 2024." },
+          { id: 3, text: "Quinbrook / Supernode public announcements, FIRB approval, Origin Energy offtake, 2025\u20132026." },
+        ]}
+      />
 
       {/* CTA */}
       <section className="bg-olive py-[100px] lg:py-[120px]">
