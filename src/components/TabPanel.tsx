@@ -15,10 +15,28 @@ interface TabPanelProps {
   tabs: Tab[];
   defaultTab?: string;
   className?: string;
+  /** Controlled mode: pass to sync with external state */
+  activeTab?: string;
+  /** Controlled mode: fires when user clicks/keys a tab */
+  onTabChange?: (id: string) => void;
+  /** Unique layoutId prefix to avoid conflicts when multiple TabPanels are on-screen */
+  layoutId?: string;
 }
 
-export default function TabPanel({ tabs, defaultTab, className = "" }: TabPanelProps) {
-  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
+export default function TabPanel({
+  tabs,
+  defaultTab,
+  className = "",
+  activeTab: controlledTab,
+  onTabChange,
+  layoutId = "tab-underline",
+}: TabPanelProps) {
+  const [internalTab, setInternalTab] = useState(defaultTab || tabs[0]?.id);
+  const activeTab = controlledTab ?? internalTab;
+  const setActiveTab = (id: string) => {
+    if (onTabChange) onTabChange(id);
+    else setInternalTab(id);
+  };
   const tabListRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = useCallback(
@@ -76,7 +94,7 @@ export default function TabPanel({ tabs, defaultTab, className = "" }: TabPanelP
               {tab.label}
               {isActive && (
                 <motion.div
-                  layoutId="tab-underline"
+                  layoutId={layoutId}
                   className="absolute bottom-0 left-0 right-0 h-0.5 bg-olive rounded-full"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />

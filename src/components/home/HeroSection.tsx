@@ -3,7 +3,48 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronDown, ArrowRight } from "lucide-react";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
+/* ── Animated mesh gradient background ── */
+function AnimatedBackground() {
+  const blobs = [
+    { x: "15%", y: "20%", size: 400, color: "#5C6F2D", delay: 0 },
+    { x: "70%", y: "60%", size: 350, color: "#8BA04A", delay: 5 },
+    { x: "40%", y: "75%", size: 300, color: "#5C6F2D", delay: 10 },
+    { x: "85%", y: "25%", size: 280, color: "#4A5A23", delay: 15 },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {blobs.map((blob, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            width: blob.size,
+            height: blob.size,
+            background: `radial-gradient(circle, ${blob.color}22 0%, transparent 70%)`,
+            left: blob.x,
+            top: blob.y,
+            transform: "translate(-50%, -50%)",
+          }}
+          animate={{
+            x: [0, 30, -20, 10, 0],
+            y: [0, -25, 15, -10, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: blob.delay,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ── Energy Grid SVG animation ── */
 function EnergyGrid() {
   const nodes = [
     { cx: 50, cy: 40 },
@@ -52,7 +93,6 @@ function EnergyGrid() {
         </filter>
       </defs>
 
-      {/* Connection lines */}
       {connections.map(([a, b], i) => (
         <line
           key={`l-${i}`}
@@ -66,7 +106,6 @@ function EnergyGrid() {
         />
       ))}
 
-      {/* Animated particles — more of them, varied speeds */}
       {connections.filter((_, i) => i % 2 === 0).map(([a, b], i) => (
         <circle key={`p-${i}`} r="2" fill="#8BA04A" opacity="0" filter="url(#glow)">
           <animateMotion
@@ -85,7 +124,6 @@ function EnergyGrid() {
         </circle>
       ))}
 
-      {/* Nodes */}
       {nodes.map((node, i) => (
         <g key={`n-${i}`} className="energy-node">
           <circle
@@ -97,12 +135,7 @@ function EnergyGrid() {
             strokeWidth="1.5"
             strokeOpacity="0.3"
           />
-          <circle
-            cx={node.cx}
-            cy={node.cy}
-            r="3.5"
-            fill="url(#nodeGrad)"
-          >
+          <circle cx={node.cx} cy={node.cy} r="3.5" fill="url(#nodeGrad)">
             <animate
               attributeName="opacity"
               values="0.35;0.85;0.35"
@@ -117,10 +150,20 @@ function EnergyGrid() {
   );
 }
 
+/* ── Hero stat bar ── */
+const heroStats = [
+  { value: 6, suffix: " GW", label: "Capacity pipeline" },
+  { value: 18, suffix: "–24 mo", label: "To operational" },
+  { value: 99.99, suffix: "%", label: "Uptime target", decimals: 2 },
+  { label: "Energy cost", staticValue: "~$110/MWh" },
+];
+
 export default function HeroSection() {
   return (
     <section className="min-h-[100dvh] flex items-center pt-[60px] sm:pt-[72px] relative overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 w-full py-16 lg:py-0">
+      <AnimatedBackground />
+
+      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 w-full py-16 lg:py-0 relative z-10">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-16 items-center">
           {/* Left — Text */}
           <div className="max-w-xl">
@@ -166,6 +209,34 @@ export default function HeroSection() {
               >
                 Talk to Us
               </Link>
+            </motion.div>
+
+            {/* Hero stat bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.7 }}
+              className="mt-10 flex flex-wrap gap-y-4 divide-x divide-divider"
+            >
+              {heroStats.map((stat, i) => (
+                <div key={i} className="px-4 first:pl-0 last:pr-0">
+                  <p className="text-[11px] uppercase tracking-wider text-text-muted font-medium">
+                    {stat.label}
+                  </p>
+                  <p className="font-serif text-[20px] text-text-primary mt-0.5">
+                    {"staticValue" in stat && stat.staticValue ? (
+                      stat.staticValue
+                    ) : (
+                      <AnimatedCounter
+                        target={stat.value ?? 0}
+                        suffix={stat.suffix}
+                        decimals={stat.decimals}
+                        className="inherit"
+                      />
+                    )}
+                  </p>
+                </div>
+              ))}
             </motion.div>
           </div>
 

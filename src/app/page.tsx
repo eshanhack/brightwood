@@ -4,7 +4,9 @@ import CredibilityBar from "@/components/home/CredibilityBar";
 import ProblemSection from "@/components/home/ProblemSection";
 import HowItWorksSection from "@/components/home/HowItWorksSection";
 import AdvantageSection from "@/components/home/AdvantageSection";
+import SustainabilitySection from "@/components/home/SustainabilitySection";
 import BusinessModelSection from "@/components/home/BusinessModelSection";
+import ProjectPipelineSection from "@/components/home/ProjectPipelineSection";
 import ValidationSection from "@/components/home/ValidationSection";
 import PressSection from "@/components/home/PressSection";
 import CTASection from "@/components/home/CTASection";
@@ -18,7 +20,9 @@ export default function HomePage() {
       <ProblemSection />
       <HowItWorksSection />
       <AdvantageSection />
+      <SustainabilitySection />
       <BusinessModelSection />
+      <ProjectPipelineSection />
       <ValidationSection />
       <PressSection />
       <CTASection />
