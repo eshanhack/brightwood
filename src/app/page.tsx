@@ -6,6 +6,7 @@ import HowItWorksSection from "@/components/home/HowItWorksSection";
 import AdvantageSection from "@/components/home/AdvantageSection";
 import BusinessModelSection from "@/components/home/BusinessModelSection";
 import ValidationSection from "@/components/home/ValidationSection";
+import PressSection from "@/components/home/PressSection";
 import CTASection from "@/components/home/CTASection";
 
 export default function HomePage() {
@@ -19,6 +20,7 @@ export default function HomePage() {
       <AdvantageSection />
       <BusinessModelSection />
       <ValidationSection />
+      <PressSection />
       <CTASection />
     </>
   );
