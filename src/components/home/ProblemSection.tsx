@@ -3,6 +3,7 @@
 import FadeIn from "@/components/FadeIn";
 import BentoGrid from "@/components/BentoGrid";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import EnergyGapChart from "@/components/EnergyGapChart";
 import Link from "next/link";
 import { DollarSign, Zap, Clock, TrendingUp, ArrowRight } from "lucide-react";
 
@@ -65,6 +66,11 @@ export default function ProblemSection() {
             ]}
           />
         </div>
+
+        {/* Energy Gap Chart */}
+        <FadeIn delay={0.2}>
+          <EnergyGapChart className="mt-12" />
+        </FadeIn>
 
         <FadeIn delay={0.3}>
           <p className="mt-10 text-text-secondary leading-[1.7] max-w-3xl">
