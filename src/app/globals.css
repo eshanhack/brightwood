@@ -20,47 +20,94 @@
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ── Base layer: resets & globals ── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #E8E5E1 #FAF9F6;
+  }
+
+  body {
+    background-color: #FAF9F6;
+    color: #2B2723;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #5C6F2D;
+    color: #FFFFFF;
+  }
+
+  :focus-visible {
+    outline: 2px solid #5C6F2D;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Scrollbar (WebKit) */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FAF9F6;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #E8E5E1;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #857F78;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: #FAF9F6;
-  color: #2B2723;
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-::selection {
-  background-color: #5C6F2D;
-  color: #FFFFFF;
-}
-
-/* Focus ring */
-:focus-visible {
-  outline: 2px solid #5C6F2D;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* Marquee */
+/* ── Keyframes (layer-neutral) ── */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-.animate-marquee {
-  animation: marquee 40s linear infinite;
-  will-change: transform;
+@keyframes nodeGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(92, 111, 45, 0.2)); }
+  50% { filter: drop-shadow(0 0 14px rgba(92, 111, 45, 0.5)); }
 }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Components layer: custom reusable classes ── */
+@layer components {
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+
+  .energy-node {
+    animation: nodeGlow 3s ease-in-out infinite;
+  }
+
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(43, 39, 35, 0.08);
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+}
+
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .energy-node {
@@ -74,59 +121,7 @@ body {
   }
 }
 
-/* Energy node glow */
-@keyframes nodeGlow {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(92, 111, 45, 0.2)); }
-  50% { filter: drop-shadow(0 0 14px rgba(92, 111, 45, 0.5)); }
-}
-
-.energy-node {
-  animation: nodeGlow 3s ease-in-out infinite;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #FAF9F6;
-}
-::-webkit-scrollbar-thumb {
-  background: #E8E5E1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #857F78;
-}
-/* Firefox scrollbar */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #E8E5E1 #FAF9F6;
-}
-
-/* Smooth card hover class */
-.card-hover {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(43, 39, 35, 0.08);
-}
-
-/* Spinner for loading */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-.spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-}
-
-/* Print */
+/* ── Print ── */
 @media print {
   nav, footer, .animate-marquee { display: none !important; }
   body { background: white !important; color: black !important; }
