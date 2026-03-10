@@ -4,7 +4,7 @@ import ContactContent from "./ContactContent";
 export const metadata: Metadata = {
   title: "Contact — Brightwood Energy",
   description:
-    "Contact Brightwood Energy. Raising $5–15M AUD in development capital for solar + battery power stations serving AI data centres in regional Australia.",
+    "Contact Brightwood Energy. Whether you're a data centre operator, energy professional, or investor — we'd love to hear from you.",
 };
 
 export default function ContactPage() {

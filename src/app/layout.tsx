@@ -18,6 +18,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://brightwood.vercel.app"),
   title: "Brightwood Energy — Dedicated Power for AI Data Centres",
   description:
     "We build, own, and operate solar + battery power stations purpose-built for AI data centres in regional Australia.",

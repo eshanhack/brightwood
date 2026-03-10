@@ -56,63 +56,40 @@ const phases = [
   },
 ];
 
-const valuationScenarios = [
-  {
-    scenario: "500 MW Portfolio",
-    revenue: "~$455M",
-    ebitda: "~$295M",
-    valuationRange: "$4.2–6.6B",
-    multiple: "14–22x EBITDA",
-  },
-  {
-    scenario: "1 GW Portfolio",
-    revenue: "~$910M",
-    ebitda: "~$591M",
-    valuationRange: "$8.4–13.2B",
-    multiple: "14–22x EBITDA",
-  },
-];
-
 const aiProofScenarios = [
   {
     scenario: "AI model efficiency improves 10x",
-    impact: "Same chips run 10x more inference → same power draw, more useful compute",
+    impact:
+      "Same chips run 10x more inference \u2192 same power draw, more useful compute",
     outcome: "Demand holds",
   },
   {
     scenario: "Nvidia releases more efficient chips",
-    impact: "Operators fill the same racks with more powerful GPUs → same power per rack",
+    impact:
+      "Operators fill the same racks with more powerful GPUs \u2192 same power per rack",
     outcome: "Demand holds",
   },
   {
     scenario: "AI bubble pops, demand slows",
-    impact: "Cloud migration continues regardless. Enterprise workloads still need Australian compute.",
-    outcome: "Demand slows but doesn't reverse",
+    impact:
+      "Cloud migration continues regardless. Enterprise workloads still need Australian compute.",
+    outcome: "Demand slows but doesn\u2019t reverse",
   },
   {
     scenario: "Nuclear becomes viable in Australia",
-    impact: "15–20 year build timeline. Data centres need power in 2–3 years, not 2040.",
+    impact:
+      "15\u201320 year build timeline. Data centres need power in 2\u20133 years, not 2040.",
     outcome: "No near-term impact",
   },
   {
     scenario: "Grid catches up",
-    impact: "Brightwood PPAs are 15–20 year contracts with take-or-pay. Revenue is locked in.",
+    impact:
+      "Brightwood PPAs are 15\u201320 year contracts with take-or-pay. Revenue is locked in.",
     outcome: "Contracted cash flows protected",
   },
 ];
 
-const exitBuyers = [
-  "Macquarie",
-  "IFM Investors",
-  "AustralianSuper",
-  "Brookfield",
-  "Blackstone",
-  "CPP Investments",
-  "GIC",
-  "Temasek",
-];
-
-export default function ScaleContent() {
+export default function InvestorsContent() {
   return (
     <>
       {/* Hero */}
@@ -132,8 +109,8 @@ export default function ScaleContent() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-6 text-xl text-text-secondary max-w-2xl leading-relaxed"
           >
-            $5–15M in development capital today. A multi-billion dollar
-            infrastructure portfolio within five to seven years.
+            From a single 100 MW project to a multi-gigawatt infrastructure
+            portfolio within five to seven years.
           </motion.p>
         </div>
       </section>
@@ -183,95 +160,23 @@ export default function ScaleContent() {
         </div>
       </section>
 
-      {/* Valuation Scenarios */}
-      <section className="py-[100px] lg:py-[140px]">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-          <FadeIn>
-            <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
-              Valuation Scenarios
-            </h2>
-            <p className="mt-4 text-lg text-text-secondary max-w-3xl leading-relaxed">
-              Based on comparable infrastructure transactions and contracted
-              cash flow multiples.
-            </p>
-          </FadeIn>
-
-          <div className="mt-14 grid md:grid-cols-2 gap-6">
-            {valuationScenarios.map((scenario, i) => (
-              <FadeIn key={i} delay={i * 0.15}>
-                <div className="p-8 bg-white rounded-lg border border-divider card-hover h-full">
-                  <h3 className="font-serif text-2xl text-text-primary mb-6">
-                    {scenario.scenario}
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-baseline border-b border-divider pb-3">
-                      <span className="text-text-secondary">
-                        Annual Revenue
-                      </span>
-                      <span className="font-medium text-text-primary">
-                        {scenario.revenue}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-baseline border-b border-divider pb-3">
-                      <span className="text-text-secondary">EBITDA</span>
-                      <span className="font-medium text-text-primary">
-                        {scenario.ebitda}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-baseline border-b border-divider pb-3">
-                      <span className="text-text-secondary">Multiple</span>
-                      <span className="font-medium text-text-primary">
-                        {scenario.multiple}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-baseline pt-1">
-                      <span className="text-text-secondary font-medium">
-                        Valuation
-                      </span>
-                      <span className="font-serif text-[28px] text-olive">
-                        {scenario.valuationRange}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-
-          {/* AirTrunk Comparable */}
-          <FadeIn delay={0.3}>
-            <div className="mt-10 p-8 bg-olive-tint rounded-lg border-l-4 border-olive">
-              <h3 className="font-serif text-xl text-text-primary mb-3">
-                The AirTrunk Comparable
-              </h3>
-              <p className="text-text-secondary leading-relaxed">
-                Founded Sydney 2015. Acquired by Blackstone for AUD $24B in
-                2024. 800 MW capacity. ~$600M EBITDA. ~40x multiple. Nine
-                years from founding to one of the largest infrastructure
-                transactions in Australian history.
-              </p>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
       {/* AI-Proof Scenarios */}
-      <section className="py-[100px] lg:py-[140px] bg-white">
+      <section className="py-[100px] lg:py-[140px]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
           <FadeIn>
             <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
               Why This Is AI-Proof
             </h2>
             <p className="mt-4 text-lg text-text-secondary max-w-3xl leading-relaxed">
-              Five scenarios that challenge the AI thesis — and why Brightwood
-              is resilient to each.
+              Five scenarios that challenge the AI thesis — and why Brightwood is
+              resilient to each.
             </p>
           </FadeIn>
 
           <div className="mt-14 space-y-4">
             {aiProofScenarios.map((s, i) => (
               <FadeIn key={i} delay={i * 0.08}>
-                <div className="p-6 bg-cream rounded-lg grid md:grid-cols-3 gap-4 items-start">
+                <div className="p-6 bg-white rounded-lg grid md:grid-cols-3 gap-4 items-start">
                   <div>
                     <p className="font-medium text-text-primary text-[15px]">
                       {s.scenario}
@@ -294,43 +199,17 @@ export default function ScaleContent() {
         </div>
       </section>
 
-      {/* Exit Buyers */}
-      <section className="py-[100px] lg:py-[140px]">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-          <FadeIn>
-            <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
-              Natural Exit Buyers
-            </h2>
-            <p className="mt-4 text-lg text-text-secondary max-w-3xl leading-relaxed">
-              The world&apos;s largest infrastructure investors are actively
-              seeking contracted, long-duration energy assets.
-            </p>
-          </FadeIn>
-
-          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {exitBuyers.map((buyer, i) => (
-              <FadeIn key={i} delay={i * 0.06}>
-                <div className="p-6 bg-white rounded-lg border border-divider text-center card-hover">
-                  <span className="text-lg font-medium text-text-primary">
-                    {buyer}
-                  </span>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="bg-olive py-[100px] lg:py-[120px]">
         <div className="max-w-[800px] mx-auto px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="font-serif text-[36px] md:text-[44px] text-white">
-              The Opportunity
+              Interested in Learning More?
             </h2>
             <p className="mt-4 text-lg text-white/80 leading-relaxed">
-              Raising $5–15M AUD in development capital. The window to establish
-              position is 18–24 months.
+              We&apos;re building Australia&apos;s dedicated power
+              infrastructure for the AI era. Get in touch to discuss the
+              opportunity.
             </p>
             <Link
               href="/contact"

@@ -1,14 +1,27 @@
 "use client";
 
 import FadeIn from "@/components/FadeIn";
+import { Landmark, Clock, Shield } from "lucide-react";
 
-const stats = [
-  { value: "$430\u2013530M", label: "Capital Cost" },
-  { value: "~$110/MWh", label: "PPA Price (firm, 24/7)" },
-  { value: "~$91M", label: "Annual Revenue" },
-  { value: "62\u201365%", label: "EBITDA Margin" },
-  { value: "18\u201325%", label: "Equity IRR" },
-  { value: "4\u20136 years", label: "Equity Payback" },
+const features = [
+  {
+    icon: Landmark,
+    title: "Toll-Road Model",
+    description:
+      "We build the power station. The data centre signs a long-term contract to buy the electricity. Revenue is contracted for 15\u201325 years with built-in annual escalators. The model is closer to a toll road than a tech startup \u2014 you build the infrastructure, someone pays to use it.",
+  },
+  {
+    icon: Clock,
+    title: "15\u201325 Year Contracts",
+    description:
+      "Power Purchase Agreements provide predictable, inflation-linked revenue for decades. Take-or-pay structures mean revenue flows whether the data centre runs at 50% or 100% utilisation.",
+  },
+  {
+    icon: Shield,
+    title: "Investment-Grade Customers",
+    description:
+      "Hyperscale cloud providers and enterprise data centre operators are among the most creditworthy companies on earth. Their PPA commitments carry balance-sheet certainty.",
+  },
 ];
 
 export default function EconomicsSection() {
@@ -17,39 +30,33 @@ export default function EconomicsSection() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
         <FadeIn>
           <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
-            The Economics
+            The Business Model
           </h2>
-          <p className="mt-4 text-lg text-text-secondary leading-[1.7]">
-            100 MW reference project
+          <p className="mt-4 text-lg text-text-secondary leading-[1.7] max-w-3xl">
+            Simple, proven, and built for durability. Brightwood develops power
+            infrastructure under long-term contracts with the world&apos;s
+            largest technology companies.
           </p>
         </FadeIn>
 
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-          {stats.map((stat, i) => (
-            <FadeIn key={i} delay={i * 0.08}>
-              <div className="p-6 lg:p-8 bg-cream rounded-lg border-l-4 border-olive card-hover h-full">
-                <p className="font-serif text-[26px] md:text-[32px] text-olive leading-none">
-                  {stat.value}
-                </p>
-                <p className="mt-3 text-sm text-text-secondary font-medium">
-                  {stat.label}
+        <div className="mt-14 grid md:grid-cols-3 gap-6">
+          {features.map((feature, i) => (
+            <FadeIn key={i} delay={i * 0.1}>
+              <div className="p-8 bg-cream rounded-lg border-l-4 border-olive card-hover h-full">
+                <feature.icon
+                  className="w-6 h-6 text-olive mb-4"
+                  strokeWidth={1.5}
+                />
+                <h3 className="font-serif text-xl text-text-primary mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-text-secondary leading-[1.7] text-[15px]">
+                  {feature.description}
                 </p>
               </div>
             </FadeIn>
           ))}
         </div>
-
-        <FadeIn delay={0.4}>
-          <div className="mt-10 p-8 bg-olive-tint rounded-lg border-l-4 border-olive">
-            <p className="text-text-secondary leading-[1.7]">
-              <span className="font-semibold text-text-primary">
-                You don&apos;t need $430M upfront.
-              </span>{" "}
-              $5\u201315M development capital funds the first 18 months. A signed
-              PPA unlocks project finance (70\u201375% debt) + institutional equity.
-            </p>
-          </div>
-        </FadeIn>
       </div>
     </section>
   );

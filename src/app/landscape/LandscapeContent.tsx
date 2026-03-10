@@ -24,7 +24,7 @@ const competitors = [
       "Grid retailers serving millions of customers. Not set up for bespoke, off-grid, single-customer power stations. Their model is centralised generation → transmission → distribution. Brightwood is the opposite.",
   },
   {
-    title: "Iren ($13B market cap)",
+    title: "Iren",
     subtitle: "Formerly Iris Energy",
     description:
       "A GPU compute company, not a power company. $9.7B Microsoft contract is for compute services, not electricity. 4.5 GW of power secured — but all in North America. No Australian energy development capability.",
@@ -36,7 +36,7 @@ const competitors = [
       "Building behind-the-meter power in Texas and the US Midwest. Not present in Australia. Years away from entering a market with different regulations, planning systems, and grid architecture.",
   },
   {
-    title: "Quinbrook ($3B+)",
+    title: "Quinbrook",
     subtitle: "Supernode, Brendale QLD",
     description:
       "2 GW grid-connected data centre campus at Brendale with 780 MW BESS. Well-funded and credible. But it's one mega-site, grid-connected — can't serve the other 4+ GW of demand across regional Australia.",
@@ -176,18 +176,18 @@ export default function LandscapeContent() {
         <div className="max-w-[800px] mx-auto px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="font-serif text-[36px] md:text-[44px] text-white">
-              See the Path to Scale
+              Learn More
             </h2>
             <p className="mt-4 text-lg text-white/80 leading-relaxed">
-              From a single 100 MW project to a multi-gigawatt portfolio.
-              Explore the returns and exit pathway.
+              Explore how Brightwood builds dedicated power infrastructure for
+              data centres, or get in touch to start a conversation.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
-                href="/scale"
+                href="/how-it-works"
                 className="inline-flex items-center px-7 py-3.5 bg-white text-olive font-medium rounded-lg hover:bg-cream transition-colors duration-200"
               >
-                Scale & Returns
+                How It Works
               </Link>
               <Link
                 href="/contact"

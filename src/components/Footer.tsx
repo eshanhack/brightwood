@@ -3,15 +3,17 @@ import Link from "next/link";
 const footerLinks = {
   Company: [
     { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ],
   Learn: [
     { label: "The Opportunity", href: "/opportunity" },
     { label: "How It Works", href: "/how-it-works" },
+    { label: "FAQ", href: "/faq" },
   ],
-  Investors: [
-    { label: "Scale & Returns", href: "/scale" },
+  Resources: [
     { label: "Landscape", href: "/landscape" },
+    { label: "Investors", href: "/investors" },
   ],
 };
 
@@ -63,6 +65,9 @@ export default function Footer() {
           </p>
           <p className="text-sm text-text-muted">Brisbane, Australia</p>
         </div>
+        <p className="mt-6 text-xs text-text-muted/60 text-center leading-relaxed">
+          Data sourced from AEMO 2025 ESOO, Oxford Economics Australia (2025), CSIRO GenCost 2025&ndash;26, Moody&apos;s Ratings (2026), CEFC (2025). All projections use AEMO Step Change scenario unless noted.
+        </p>
       </div>
     </footer>
   );

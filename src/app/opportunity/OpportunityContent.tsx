@@ -121,8 +121,58 @@ export default function OpportunityContent() {
         </div>
       </section>
 
-      {/* Why Australia */}
+      {/* Understanding the Grid */}
       <section className="py-[100px] lg:py-[140px]">
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
+          <FadeIn>
+            <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
+              Understanding the Grid
+            </h2>
+            <p className="mt-4 text-lg text-text-secondary max-w-3xl leading-relaxed">
+              Australia&apos;s electricity grid was designed for a different era.
+              Here&apos;s why it can&apos;t serve the next generation of data
+              centres.
+            </p>
+          </FadeIn>
+
+          <div className="mt-14 grid md:grid-cols-2 gap-6">
+            <FadeIn delay={0.1}>
+              <div className="p-8 bg-red-tint rounded-lg border-l-4 border-red h-full">
+                <h3 className="font-serif text-xl text-text-primary mb-3">
+                  Coal Is Retiring
+                </h3>
+                <p className="font-serif text-[36px] text-red mb-3">11 GW</p>
+                <p className="text-text-secondary leading-relaxed text-[15px]">
+                  of coal-fired generation is scheduled to retire by 2035 &mdash;
+                  Eraring, Bayswater, Vales Point, Yallourn, Callide B. This is
+                  happening at the same time data centre demand is surging. The
+                  grid isn&apos;t just failing to grow fast enough &mdash;
+                  it&apos;s actively shrinking.
+                </p>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.2}>
+              <div className="p-8 bg-olive-tint rounded-lg border-l-4 border-olive h-full">
+                <h3 className="font-serif text-xl text-text-primary mb-3">
+                  The Queue Problem
+                </h3>
+                <p className="font-serif text-[36px] text-olive mb-3">
+                  3&ndash;5 yrs
+                </p>
+                <p className="text-text-secondary leading-relaxed text-[15px]">
+                  New grid connections require substation upgrades, transmission
+                  line extensions, and regulatory approvals that take years.
+                  Behind-the-meter power bypasses the entire queue by generating
+                  electricity on-site, directly adjacent to the data centre.
+                </p>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Australia */}
+      <section className="py-[100px] lg:py-[140px] bg-white">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
           <FadeIn>
             <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
@@ -198,7 +248,7 @@ export default function OpportunityContent() {
       </section>
 
       {/* Why Regional */}
-      <section className="py-[100px] lg:py-[140px] bg-white">
+      <section className="py-[100px] lg:py-[140px]">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
           <FadeIn>
             <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
@@ -255,7 +305,7 @@ export default function OpportunityContent() {
       </section>
 
       {/* The Window */}
-      <section className="py-[100px] lg:py-[140px]">
+      <section className="py-[100px] lg:py-[140px] bg-white">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
           <FadeIn>
             <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">

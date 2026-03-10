@@ -13,8 +13,9 @@ export default function CTASection() {
             The Opportunity
           </h2>
           <p className="mt-4 text-lg text-white/80 leading-[1.7] max-w-xl mx-auto">
-            Raising $5–15M AUD in development capital. The window to establish
-            position is 18–24 months.
+            We&apos;re building Australia&apos;s dedicated power infrastructure
+            for the AI era. Talk to us about partnerships, sites, or joining the
+            team.
           </p>
           <Link
             href="/contact"

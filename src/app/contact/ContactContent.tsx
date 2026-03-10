@@ -97,9 +97,9 @@ export default function ContactContent() {
               className="mt-10 p-6 bg-olive-tint rounded-lg border-l-4 border-olive"
             >
               <p className="text-text-secondary leading-[1.7] text-[15px]">
-                Currently raising $5–15M AUD in development capital and seeking
-                an energy co-founder with Australian project delivery
-                experience.
+                Whether you&apos;re a data centre operator exploring power
+                options, an energy professional interested in what we&apos;re
+                building, or an investor — we&apos;d love to hear from you.
               </p>
             </motion.div>
           </div>
@@ -182,6 +182,32 @@ export default function ContactContent() {
                     className={`${inputClasses} disabled:opacity-60 disabled:cursor-not-allowed`}
                     placeholder="Your role and company"
                   />
+                </div>
+                <div>
+                  <label
+                    htmlFor="inquiry-type"
+                    className="block text-sm font-medium text-text-primary mb-2"
+                  >
+                    I&apos;m a... <span className="text-red">*</span>
+                  </label>
+                  <select
+                    id="inquiry-type"
+                    name="inquiry-type"
+                    required
+                    disabled={isLoading}
+                    className={`${inputClasses} disabled:opacity-60 disabled:cursor-not-allowed`}
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select one...
+                    </option>
+                    <option value="data-centre-operator">Data Centre Operator</option>
+                    <option value="energy-professional">Energy Professional</option>
+                    <option value="investor">Investor</option>
+                    <option value="government-regulatory">Government / Regulatory</option>
+                    <option value="media">Media</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
                 <div>
                   <label

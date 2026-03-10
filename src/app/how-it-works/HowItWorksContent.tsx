@@ -390,18 +390,18 @@ export default function HowItWorksContent() {
         <div className="max-w-[800px] mx-auto px-6 lg:px-8 text-center">
           <FadeIn>
             <h2 className="font-serif text-[36px] md:text-[44px] text-white">
-              See the Competitive Landscape
+              Have Questions?
             </h2>
             <p className="mt-4 text-lg text-white/80 leading-relaxed">
-              Why hasn&apos;t anyone done this yet? Explore the competitors and
-              understand Brightwood&apos;s positioning.
+              Learn more about behind-the-meter power, AI energy demands, and
+              what Brightwood is building.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
-                href="/landscape"
+                href="/faq"
                 className="inline-flex items-center px-7 py-3.5 bg-white text-olive font-medium rounded-lg hover:bg-cream transition-colors duration-200"
               >
-                Competitive Landscape
+                Read the FAQ
               </Link>
               <Link
                 href="/contact"

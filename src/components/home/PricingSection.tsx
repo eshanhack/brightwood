@@ -36,7 +36,7 @@ const advantages = [
     icon: Banknote,
     title: "Price Advantage",
     description:
-      "$30\u201350/MWh margin. 60\u201365% EBITDA. Customer saves vs grid + gets 100% clean energy.",
+      "Brightwood power costs less than grid retail \u2014 and the customer gets 100% clean energy included.",
   },
 ];
 
