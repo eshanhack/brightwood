@@ -7,6 +7,7 @@ import AdvantageSection from "@/components/home/AdvantageSection";
 import SustainabilitySection from "@/components/home/SustainabilitySection";
 import BusinessModelSection from "@/components/home/BusinessModelSection";
 import ProjectPipelineSection from "@/components/home/ProjectPipelineSection";
+import AIStackSection from "@/components/home/AIStackSection";
 import ValidationSection from "@/components/home/ValidationSection";
 import PressSection from "@/components/home/PressSection";
 import CTASection from "@/components/home/CTASection";
@@ -23,6 +24,7 @@ export default function HomePage() {
       <SustainabilitySection />
       <BusinessModelSection />
       <ProjectPipelineSection />
+      <AIStackSection />
       <ValidationSection />
       <PressSection />
       <CTASection />

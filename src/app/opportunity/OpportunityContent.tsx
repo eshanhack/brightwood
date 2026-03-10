@@ -73,6 +73,59 @@ export default function OpportunityContent() {
         </div>
       </section>
 
+      {/* AI Is Infrastructure, Not Software — Jensen Huang / Nvidia framing */}
+      <section className="py-[80px] lg:py-[100px] bg-olive-tint">
+        <div className="max-w-[800px] mx-auto px-6 lg:px-8">
+          <FadeIn>
+            <h2 className="font-serif text-[36px] md:text-[44px] text-text-primary">
+              AI Is Infrastructure, Not Software
+            </h2>
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <div className="mt-8 space-y-6 text-[16px] text-text-secondary leading-[1.8]">
+              <p>
+                For most of computing history, software was pre-recorded. Humans
+                described an algorithm. Computers executed it. AI breaks that
+                model. For the first time, we have a computer that can understand
+                unstructured information, reason about context, and generate
+                intelligence in real time.
+              </p>
+              <p>
+                Because intelligence is produced in real time, the entire
+                computing stack beneath it had to be reinvented. Nvidia describes
+                AI as a five-layer industrial stack: energy, chips,
+                infrastructure, models, and applications. Each layer depends on
+                the one below it. Every successful application — from drug
+                discovery to autonomous vehicles — pulls on every layer beneath
+                it, all the way down to the power plant.
+              </p>
+              <p>
+                This is why energy is the binding constraint. Not chips — Nvidia
+                will sell those to anyone. Not models — open-source makes those
+                widely available. Not software — thousands of startups build
+                applications. The scarce resource is permitted, firm, reliable
+                electricity delivered at the speed and scale that AI factories
+                require. That is what Brightwood builds.
+              </p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <div className="mt-8 p-5 bg-olive rounded-lg">
+              <p className="text-white/90 italic text-[15px] leading-[1.7]">
+                &ldquo;We are a few hundred billion dollars into it. Trillions of
+                dollars of infrastructure still need to be built. This is becoming
+                the largest infrastructure buildout in human history.&rdquo;
+              </p>
+              <p className="mt-3 text-white/50 text-[13px] font-medium">
+                — Jensen Huang, CEO, Nvidia (March 2026)
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* The AI Power Crisis */}
       <section className="py-[100px] lg:py-[140px] bg-white">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8">

@@ -23,11 +23,15 @@ export default function ValidationSection() {
     <section className="bg-olive py-[80px] lg:py-[100px]">
       <div className="max-w-[900px] mx-auto px-6 lg:px-8 text-center">
         <FadeIn>
-          <blockquote className="font-serif text-[26px] md:text-[34px] lg:text-[40px] text-white italic leading-[1.3]">
-            &ldquo;The bottleneck isn&apos;t demand. It&apos;s delivery. Whoever
-            solves power delivery fastest wins.&rdquo;
+          <blockquote className="font-serif text-[24px] md:text-[32px] lg:text-[38px] text-white italic leading-[1.35]">
+            &ldquo;Intelligence generated in real time requires power generated
+            in real time. There is no abstraction layer beneath energy. It sets
+            the ceiling on how much intelligence can be produced at all.&rdquo;
           </blockquote>
           <div className="mt-6 w-12 h-[2px] bg-white/40 mx-auto" />
+          <p className="mt-4 text-white/60 text-sm font-medium">
+            — Jensen Huang, CEO, Nvidia (March 2026)
+          </p>
         </FadeIn>
 
         <FadeIn delay={0.2}>

@@ -107,7 +107,17 @@ export default function ProblemSection() {
 
         {/* Callout */}
         <FadeIn delay={0.35}>
-          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="mt-8 p-5 bg-olive-tint rounded-lg border border-olive/10">
+            <p className="text-text-primary text-[15px] font-medium">
+              &ldquo;This is becoming the largest infrastructure buildout in
+              human history. Every company will use AI. Every nation will build
+              it.&rdquo;
+            </p>
+            <p className="text-text-muted text-[13px] mt-1">
+              — Jensen Huang, CEO, Nvidia
+            </p>
+          </div>
+          <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-4">
             <p className="text-olive italic text-[15px]">
               Chevron, OpenAI, and xAI are already building their own power in
               the US. Brightwood brings this model to Australia.

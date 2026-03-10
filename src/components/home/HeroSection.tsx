@@ -186,8 +186,8 @@ export default function HeroSection() {
               }}
               className="mt-6 text-lg lg:text-[19px] text-text-secondary leading-[1.7]"
             >
-              We build, own, and operate solar + battery power stations
-              purpose-built for AI data centres in regional Australia.
+              Every AI application depends on five layers of infrastructure.
+              Energy is the foundation. We build it.
             </motion.p>
 
             <motion.div
